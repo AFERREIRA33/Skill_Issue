@@ -4656,7 +4656,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617844251}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -4742,6 +4742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square
       objectReference: {fileID: 0}
+    - target: {fileID: 8649390924622373333, guid: fd3c7ceac7ad12c49ad30257733c36f5, type: 3}
+      propertyPath: obstacle
+      value: 
+      objectReference: {fileID: 1617844254}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: fd3c7ceac7ad12c49ad30257733c36f5, type: 3}
