@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public HPBar hpbar;
     public GameObject activable;
     private int currentHP;
+    public float timerGuard = 4f;
+    public float reloadGuard = 2f;
     public bool isGuard;
     private PlayerInput playerInput;
     private GameObject attackCollider;
@@ -26,11 +28,26 @@ public class Player : MonoBehaviour
     {
         if (playerInput.Player_Map.Guard.IsPressed())
         {
-            isGuard = true;
+            if (timerGuard > 0)
+            {
+                timerGuard -= Time.deltaTime;
+                isGuard = true;
+            }
         }
         else
         {
-            isGuard = false;
+            if (timerGuard < 4 && reloadGuard <= 0)
+            {
+                timerGuard = 4f;
+                reloadGuard = 2f;
+            }
+            else if (isGuard || reloadGuard < 2)
+            {
+                reloadGuard = -Time.deltaTime;
+
+                isGuard = false;
+            }
+
         }
         if (playerInput.Player_Map.CAC.IsPressed())
         {
@@ -42,7 +59,6 @@ public class Player : MonoBehaviour
         }
         if (playerInput.Player_Map.Activable.triggered)
         {
-            Debug.Log("toto");
             if (activable != null)
             {
                 
