@@ -44,6 +44,51 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotation"",
+                    ""type"": ""Value"",
+                    ""id"": ""596094dd-7372-4a2a-a3d3-7f5e7c49b353"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0ef4512-97b3-4a26-aa9b-678ef87898ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Guard"",
+                    ""type"": ""Button"",
+                    ""id"": ""b03e03e0-59a8-4131-9da1-3d3584945a41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Activable"",
+                    ""type"": ""Button"",
+                    ""id"": ""218d0830-2bd4-4c6c-9312-c7b145176302"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CAC"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2ece05b-584e-46b5-a692-012ca6946d03"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -167,6 +212,94 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6dd883a9-640f-4d1d-937d-410fa86f6ad9"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""165ee7a4-0a52-4e9f-a72f-1c4cadc8e9db"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""602871ba-0344-4be2-ba05-44b6d02e405d"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Guard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0dc3e6b7-163d-4467-9f36-b8c92b897510"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Guard"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2a07cf0-3716-4466-b105-afc59a0cb06c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0dc60fb-989c-48fa-a8ce-a962136c7231"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87ca6df3-b309-4900-9cc7-1d16ce48b413"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CAC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""915bfaab-5b74-459c-9fe5-a623a99f5bbe"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CAC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,6 +310,11 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player_Map = asset.FindActionMap("Player_Map", throwIfNotFound: true);
         m_Player_Map_Movement = m_Player_Map.FindAction("Movement", throwIfNotFound: true);
         m_Player_Map_Fire = m_Player_Map.FindAction("Fire", throwIfNotFound: true);
+        m_Player_Map_Rotation = m_Player_Map.FindAction("Rotation", throwIfNotFound: true);
+        m_Player_Map_Dash = m_Player_Map.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Map_Guard = m_Player_Map.FindAction("Guard", throwIfNotFound: true);
+        m_Player_Map_Activable = m_Player_Map.FindAction("Activable", throwIfNotFound: true);
+        m_Player_Map_CAC = m_Player_Map.FindAction("CAC", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -238,12 +376,22 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IPlayer_MapActions m_Player_MapActionsCallbackInterface;
     private readonly InputAction m_Player_Map_Movement;
     private readonly InputAction m_Player_Map_Fire;
+    private readonly InputAction m_Player_Map_Rotation;
+    private readonly InputAction m_Player_Map_Dash;
+    private readonly InputAction m_Player_Map_Guard;
+    private readonly InputAction m_Player_Map_Activable;
+    private readonly InputAction m_Player_Map_CAC;
     public struct Player_MapActions
     {
         private @PlayerInput m_Wrapper;
         public Player_MapActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Map_Movement;
         public InputAction @Fire => m_Wrapper.m_Player_Map_Fire;
+        public InputAction @Rotation => m_Wrapper.m_Player_Map_Rotation;
+        public InputAction @Dash => m_Wrapper.m_Player_Map_Dash;
+        public InputAction @Guard => m_Wrapper.m_Player_Map_Guard;
+        public InputAction @Activable => m_Wrapper.m_Player_Map_Activable;
+        public InputAction @CAC => m_Wrapper.m_Player_Map_CAC;
         public InputActionMap Get() { return m_Wrapper.m_Player_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -259,6 +407,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Fire.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
                 @Fire.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
                 @Fire.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnFire;
+                @Rotation.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRotation;
+                @Rotation.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRotation;
+                @Rotation.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnRotation;
+                @Dash.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnDash;
+                @Guard.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnGuard;
+                @Guard.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnGuard;
+                @Guard.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnGuard;
+                @Activable.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnActivable;
+                @Activable.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnActivable;
+                @Activable.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnActivable;
+                @CAC.started -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnCAC;
+                @CAC.performed -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnCAC;
+                @CAC.canceled -= m_Wrapper.m_Player_MapActionsCallbackInterface.OnCAC;
             }
             m_Wrapper.m_Player_MapActionsCallbackInterface = instance;
             if (instance != null)
@@ -269,6 +432,21 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
+                @Rotation.started += instance.OnRotation;
+                @Rotation.performed += instance.OnRotation;
+                @Rotation.canceled += instance.OnRotation;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
+                @Guard.started += instance.OnGuard;
+                @Guard.performed += instance.OnGuard;
+                @Guard.canceled += instance.OnGuard;
+                @Activable.started += instance.OnActivable;
+                @Activable.performed += instance.OnActivable;
+                @Activable.canceled += instance.OnActivable;
+                @CAC.started += instance.OnCAC;
+                @CAC.performed += instance.OnCAC;
+                @CAC.canceled += instance.OnCAC;
             }
         }
     }
@@ -277,5 +455,10 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
+        void OnRotation(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnGuard(InputAction.CallbackContext context);
+        void OnActivable(InputAction.CallbackContext context);
+        void OnCAC(InputAction.CallbackContext context);
     }
 }
