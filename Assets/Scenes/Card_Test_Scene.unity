@@ -392,6 +392,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 966738601248434709, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_Name
+      value: Play_Test
+      objectReference: {fileID: 0}
     - target: {fileID: 1618160363743202658, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -532,6 +536,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1618160364333066476, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1618160364333066479, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_TagString
       value: Deck
@@ -555,6 +563,14 @@ PrefabInstance:
     - target: {fileID: 1618160365303851116, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_TagString
       value: Title
+      objectReference: {fileID: 0}
+    - target: {fileID: 1618160365312712435, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1618160365312712435, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_Value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1618160365342740053, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -596,9 +612,25 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1618160365452919012, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1618160365569453696, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_TagString
       value: AllCards
+      objectReference: {fileID: 0}
+    - target: {fileID: 1618160365569453697, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 113.83527
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636258750992800838, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1722705307}
+    - target: {fileID: 6636258750992800838, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadPlayTest
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
