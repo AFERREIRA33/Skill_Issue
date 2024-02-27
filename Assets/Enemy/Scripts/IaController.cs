@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEngine.GraphicsBuffer;
 
 public class IaController : MonoBehaviour
 {
@@ -28,7 +30,13 @@ public class IaController : MonoBehaviour
     private float timer = 0;
     private float timeSearch = 0;
     private int count = 0;
+    private float speed = 2.0f;
 
+    private int currentHealth = 100;
+    private int maxHealth = 100;
+    private int damageSword = 20;
+    private int damageShoot = 10;
+    private bool isGuard = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,46 +44,54 @@ public class IaController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         targetPath = player;
         pathList.Add(transform.position);
+        SearchPath();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        SearchPath();
         if (Vector3.Distance(transform.position, targetPath.transform.position) < 2f)
         {
             if(count == 0)
             {
 
                 findPath = true;
+                SearchPath();
             }
             count += 1;
             
         }
 
-        timer += Time.deltaTime;
 
-        if (timer >= 1f)
+        if(pathList.Count - 1 > 0)
         {
-            
-            timer = 0;
-            move = true;
-
+            transform.Translate(Vector3.Normalize(pathList[0] - transform.position) * Time.deltaTime * speed);
+            Debug.Log(pathList[0]);
+            if (Vector3.Distance(transform.position, pathList[0])< 0.5f)
+            {
+                pathList.RemoveAt(0);
+            }
         }
 
-        if (move)
+    }
+
+    public void OnTakeDamage(int damage)
+    {
+        
+        if (!isGuard)
         {
-            if(pathList.Count -1> 0)
+            currentHealth -= damage;
+            //hpbar.UpdateHPSlider(currentHP, MaxHp);
+            if (currentHealth <= 0)
             {
-                this.transform.position = pathList[0];
-                pathList.RemoveAt(0);
-                move = false;
+                Destroy(this.gameObject);
+                //hpbar.UpdateHPSlider(currentHP, MaxHp);
             }
-            
         }
     }
 
+    // Pathfinding Function
     void SearchPath()
     {
         int count = 0;
@@ -141,8 +157,7 @@ public class IaController : MonoBehaviour
     
     }
 
-
-
+    //path finding function
     void setPosTested(string posTry, Vector3 newTestesPos)
     {
         if (posTry == "up")
@@ -163,6 +178,7 @@ public class IaController : MonoBehaviour
         }
     }
 
+    //path finding function
     bool NoWall()
     {
 
