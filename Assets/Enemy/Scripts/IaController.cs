@@ -12,6 +12,8 @@ public class IaController : MonoBehaviour
     public Tilemap obstacle;
     private bool findPath = true;
     private List<Vector3> pathList = new List<Vector3>();
+    private List<Vector3> upPath = new List<Vector3>();
+    private List<Vector3> downPath = new List<Vector3>();
     private Dictionary<string, float> pathDico = new Dictionary<string, float>() { 
         { "up", 0f },
         { "down", 0f }, 
@@ -24,7 +26,8 @@ public class IaController : MonoBehaviour
     private Vector3 saveLastPos = new Vector3(-20000,-20000,-20000);
     bool move = false;
     private float timer = 0;
-
+    private float timeSearch = 0;
+    private int count = 0;
 
 
     // Start is called before the first frame update
@@ -38,14 +41,25 @@ public class IaController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //findPath = true;
+
         SearchPath();
+        if (Vector3.Distance(transform.position, targetPath.transform.position) < 2f)
+        {
+            if(count == 0)
+            {
+
+                findPath = true;
+            }
+            count += 1;
+            
+        }
 
         timer += Time.deltaTime;
 
         if (timer >= 1f)
         {
-            timer = timer % 1f;
+            
+            timer = 0;
             move = true;
 
         }
@@ -96,6 +110,7 @@ public class IaController : MonoBehaviour
                 pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
                 setPosTested(pathDicoKey, saveLastPos);
 
+
                 if (pathList.Count - 1 > 0)
                 {
                     while (pathList.Contains(posTested))
@@ -104,7 +119,7 @@ public class IaController : MonoBehaviour
                         min = pathDico.Values.Min();
                         pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
                         setPosTested(pathDicoKey, saveLastPos);
-                        
+
 
                     }
                 }
@@ -113,28 +128,20 @@ public class IaController : MonoBehaviour
 
             
             pathList.Add(posTested);
-            Debug.Log(pathDicoKey);
-            for (int i = 0; i < pathList.Count; i++)
-            {
-                Debug.Log(pathList[i]);
-            }
-            Debug.Log("\n");
 
-
-            if (Vector3.Distance(posTested, targetPath.transform.position) < 2f)
+            if (Vector3.Distance(posTested, targetPath.transform.position) < 1f)
             {
                 findPath = false;
 
             }
-            if(count == 20)
-            {
-                findPath = false;
-            }
+            pathDico.Clear();
             count += 1;
         }
 
     
     }
+
+
 
     void setPosTested(string posTry, Vector3 newTestesPos)
     {
@@ -165,6 +172,7 @@ public class IaController : MonoBehaviour
         {
             return false;
         }
+        
         return true;
     }
 
