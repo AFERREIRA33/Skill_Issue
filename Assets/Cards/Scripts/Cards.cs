@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Cards : MonoBehaviour
 {
-    public string CardName;
-    public string Description;
+    public string cardName;
+    public string description;
     public int weight;
     public bool reusable;
+    public bool activable;
     public virtual void UseCard(){}
 }
