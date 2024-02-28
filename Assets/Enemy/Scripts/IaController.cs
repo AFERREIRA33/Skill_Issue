@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,8 +15,6 @@ public class IaController : MonoBehaviour
     public Tilemap obstacle;
     private bool findPath = true;
     private List<Vector3> pathList = new List<Vector3>();
-    private List<Vector3> upPath = new List<Vector3>();
-    private List<Vector3> downPath = new List<Vector3>();
     private Dictionary<string, float> pathDico = new Dictionary<string, float>() { 
         { "up", 0f },
         { "down", 0f }, 
@@ -26,17 +25,29 @@ public class IaController : MonoBehaviour
     private Vector3 posTested;
     private GameObject targetPath;
     private Vector3 saveLastPos = new Vector3(-20000,-20000,-20000);
-    bool move = false;
-    private float timer = 0;
-    private float timeSearch = 0;
     private int count = 0;
     private float speed = 2.0f;
+    private bool findPlayer = false;
+    private List<GameObject> myTargetCard= new List<GameObject>();
+    private static GameManager gameManager;
+    private GameObject childDetectionPlayer;
+    private bool resetPathLIst = false;
+    private Vector3 lastPosReach;
+
 
     private int currentHealth = 100;
     private int maxHealth = 100;
     private int damageSword = 20;
     private int damageShoot = 10;
+
     private bool isGuard = false;
+    public float timerGuard = 4f;
+    public float reloadGuard = 2f;
+    private GameObject guardDetectionChild;
+
+    private float distanceTargetMin = 1f;
+    private bool assault = true;
+    private bool saveYourLife = false;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +55,18 @@ public class IaController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         targetPath = player;
         pathList.Add(transform.position);
+
+        guardDetectionChild = transform.GetChild(0).gameObject;
+        childDetectionPlayer = transform.GetChild(1).gameObject;
+
+        if(gameManager == null) {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+        myTargetCard = gameManager.GetComponent<GameManager>().enemyCardDraw;
+        if (myTargetCard.Count -1 > 0)
+        {
+            targetPath = myTargetCard[0];
+        }
         SearchPath();
     }
 
@@ -51,26 +74,86 @@ public class IaController : MonoBehaviour
     void Update()
     {
 
-        if (Vector3.Distance(transform.position, targetPath.transform.position) < 2f)
-        {
-            if(count == 0)
+        if (!childDetectionPlayer.GetComponent<PlayerDetection>().GetDetection()) {
+            resetPathLIst = true;
+            Debug.Log(Vector3.Distance(transform.position, lastPosReach));
+            if (Mathf.FloorToInt(Vector3.Distance(transform.position, lastPosReach)) <= 2)
             {
+                if(myTargetCard.Count -1 > 0)
+                {
+                    myTargetCard.RemoveAt(0);
+                    if(myTargetCard.Count -1 >0)
+                    {
+                        targetPath= myTargetCard[0];
+                    }
+                    else
+                    {
+                        targetPath = player;
+                    }
+                }
+                
 
-                findPath = true;
-                SearchPath();
+
+                if (count == 0)
+                {
+                    findPath = true;
+                    SearchPath();
+                    Debug.Log("test");
+                    //StartCoroutine(SearchTimer());
+
+                    count += 1;
+                }
+
             }
-            count += 1;
-            
+            if (pathList.Count - 1 > 0)
+            {
+                transform.Translate(Vector3.Normalize(pathList[0] - transform.position) * Time.deltaTime * speed);
+                
+                if (Vector3.Distance(transform.position, pathList[0]) < 0.5f)
+                {
+                    pathList.RemoveAt(0);
+                }
+            }
+        }
+        else
+        {
+            if (resetPathLIst)
+            {
+                pathList.Clear();
+                resetPathLIst= false;
+            }
+            ReachPlayer();
         }
 
 
-        if(pathList.Count - 1 > 0)
+
+
+        if (guardDetectionChild.GetComponent<GuardDetection>().GetDetection() && currentHealth < 50)
         {
-            transform.Translate(Vector3.Normalize(pathList[0] - transform.position) * Time.deltaTime * speed);
-            Debug.Log(pathList[0]);
-            if (Vector3.Distance(transform.position, pathList[0])< 0.5f)
+            if (timerGuard > 0)
             {
-                pathList.RemoveAt(0);
+                timerGuard -= Time.deltaTime;
+                isGuard = true;
+                guardDetectionChild.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            else
+            {
+                guardDetectionChild.GetComponent<GuardDetection>().SetDetection(false);
+                guardDetectionChild.GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+        else
+        {
+            if (timerGuard < 4 && reloadGuard <= 0)
+            {
+                timerGuard = 4f;
+                reloadGuard = 2f;
+            }
+            else if (isGuard || reloadGuard < 2)
+            {
+                reloadGuard = -Time.deltaTime;
+
+                isGuard = false;
             }
         }
 
@@ -87,15 +170,97 @@ public class IaController : MonoBehaviour
             {
                 Destroy(this.gameObject);
                 //hpbar.UpdateHPSlider(currentHP, MaxHp);
+            }else if(currentHealth <= 50)
+            {
+                SwitchMode(true);
             }
+            
         }
     }
+
+    void SwitchMode(bool safe) 
+    {
+        if (safe)
+        {
+            assault = false;
+            saveYourLife= true;
+            distanceTargetMin = 5f;
+        }
+        else
+        {
+            assault = true;
+            saveYourLife = false;
+            distanceTargetMin = 1f;
+        }
+    }
+
+
+    void ReachPlayer()
+    {
+        pathDico["up"] = Vector3.Distance(new Vector3(posTested.x, posTested.y + distance, -1), player.transform.position);
+        pathDico["down"] = Vector3.Distance(new Vector3(posTested.x, posTested.y - distance, -1), player.transform.position);
+        pathDico["left"] = Vector3.Distance(new Vector3(posTested.x - distance, posTested.y, -1), player.transform.position);
+        pathDico["right"] = Vector3.Distance(new Vector3(posTested.x + distance, posTested.y, -1), player.transform.position);
+
+
+        float min = pathDico.Values.Min();
+        string pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        setPosTested(pathDicoKey, transform.position);
+        if (pathList.Count - 1 > 0)
+        {
+            if (pathList.Contains(posTested))
+            {
+                pathDico[pathDicoKey] = 2147483647;
+                min = pathDico.Values.Min();
+                pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+                setPosTested(pathDicoKey, transform.position);
+            }
+        }
+
+        while (!NoWall(posTested))
+        {
+            pathDico[pathDicoKey] = 2147483647;
+            min = pathDico.Values.Min();
+            pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+            setPosTested(pathDicoKey, transform.position);
+
+
+            if (pathList.Count - 1 > 0)
+            {
+                if (pathList.Contains(posTested))
+                {
+
+                    Debug.Log("test");
+                    pathDico[pathDicoKey] = 2147483647;
+                    min = pathDico.Values.Min();
+                    pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+                    setPosTested(pathDicoKey, transform.position);
+
+
+                }
+            }
+
+        }
+        
+
+
+        pathList.Add(posTested);
+        if(pathList.Count > 6) {
+            pathList.RemoveAt(0);
+        }
+        Debug.Log(pathDicoKey);
+        transform.Translate(Vector3.Normalize(pathList[pathList.Count - 1] - transform.position) * Time.deltaTime * speed);
+
+    }
+
 
     // Pathfinding Function
     void SearchPath()
     {
         int count = 0;
         posTested = transform.position;
+        pathList.Clear();
+        lastPosReach = targetPath.transform.position;
         while (findPath)
         {
             saveLastPos = posTested;
@@ -119,7 +284,7 @@ public class IaController : MonoBehaviour
                 }
             }
 
-            while (!NoWall())
+            while (!NoWall(posTested))
             {
                 pathDico[pathDicoKey] = 2147483647;
                 min = pathDico.Values.Min();
@@ -145,7 +310,7 @@ public class IaController : MonoBehaviour
             
             pathList.Add(posTested);
 
-            if (Vector3.Distance(posTested, targetPath.transform.position) < 1f)
+            if (Vector3.Distance(posTested, targetPath.transform.position) < distanceTargetMin)
             {
                 findPath = false;
 
@@ -179,17 +344,23 @@ public class IaController : MonoBehaviour
     }
 
     //path finding function
-    bool NoWall()
+    bool NoWall(Vector3 posToTest)
     {
 
 
-        testedTilePath = obstacle.GetTile<Tile>(new Vector3Int(Mathf.FloorToInt(posTested.x), Mathf.FloorToInt(posTested.y), Mathf.FloorToInt(0)));
+        testedTilePath = obstacle.GetTile<Tile>(new Vector3Int(Mathf.FloorToInt(posToTest.x), Mathf.FloorToInt(posToTest.y), Mathf.FloorToInt(0)));
         if (testedTilePath != null)
         {
             return false;
         }
         
         return true;
+    }
+
+    IEnumerator SearchTimer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        count = 0;
     }
 
 
