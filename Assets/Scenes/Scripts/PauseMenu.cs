@@ -3,32 +3,46 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
+enum GameState
+{
+    playing,
+    paused,
+    settings
+}
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private string target;
-    public static bool gameIsPaused = false;
     public GameObject pauseMenu;
+    [SerializeField] private GameObject settingMenu;
+    private GameState currentState;
 
     public void Start()
     {
         pauseMenu.SetActive(false);
+        settingMenu.SetActive(false);
+        currentState = GameState.playing;
+        
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gameIsPaused)
+            switch (currentState)
             {
-                Resume();
-            }
-            else
-            {
-                Paused();
+                case (GameState.playing):
+                    Pause();
+                    break;
+                case (GameState.paused):
+                    Resume();
+                    break;
+                case (GameState.settings):
+                    CloseSettings();
+                    break;
             }
         }
     }
+
 
     public void Resume()
     {
@@ -37,26 +51,38 @@ public class PauseMenu : MonoBehaviour
         // arrêter le temps
         Time.timeScale = 1;
         // changer le statut du jeu
-        gameIsPaused = false;
-        
+        currentState = GameState.playing;
+
         /* Réactiver les mouvements du joueur */
     }
-    public void Paused()
+    public void Pause()
     {
         // activer menu pause
         pauseMenu.SetActive(true);
         // arrêter le temps
         Time.timeScale = 0;
         // changer le statut du jeu
-        gameIsPaused = true;
-        
+        currentState = GameState.paused;
+
         /* Désactiver les mouvements du joueur */
     }
     
-    public void loadMainMenu()
+    public void LoadMainMenu()
     {
         pauseMenu.SetActive(false);
         Resume();
         SceneManager.LoadScene(target);
+    }
+
+    public void OpenSetting()
+    {
+        currentState = GameState.settings;
+        settingMenu.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        currentState = GameState.paused;
+        settingMenu.SetActive(false);
     }
 }

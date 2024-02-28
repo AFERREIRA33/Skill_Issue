@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Linq;
+using UnityEngine.UI;
 
 public class SettingMenu : MonoBehaviour
 {
@@ -12,27 +14,45 @@ public class SettingMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
-
+        int bestResolutionIndex = 0;
         List<string> optionsDropdowns = new List<string>();
-        for (int i = 0; i < resolutions.Length; i++)
+        
+        resolutions = Screen.resolutions.Select(resolution => new Resolution {width = resolution.width, height = resolution.height}).Distinct().ToArray();
+        resolutionDropdown.ClearOptions();
+        
+        for (int index = 0; index < resolutions.Length; index++)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
+            string option = resolutions[index].width + "x" + resolutions[index].height;
             optionsDropdowns.Add(option);
+
+            if (resolutions[index].width == Screen.width && resolutions[index].height == Screen.height)
+            {
+                bestResolutionIndex = index;
+            }
         }
 
         resolutionDropdown.AddOptions(optionsDropdowns);
+        resolutionDropdown.value = bestResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
 
-    public void setFullScreen(bool isFullScreen)
+    public void SetFullScreen(bool isFullScreen)
     {
         Screen.fullScreen = isFullScreen;
     }
     
-    public void setVolume(float value)
+    public void SetVolume(float value)
     {
-        audio.SetFloat("volume", value);
         Debug.Log(value);
+        audio.SetFloat("volume", value);
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        resolutionDropdown.value = resolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
 }
