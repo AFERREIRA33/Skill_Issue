@@ -13,8 +13,37 @@ public class DecksDestiny : Cards
         reusable = true;
     }
 
-    public override void UseCard()
+    public override void UseCard(bool isPlayer)
     {
+        Debug.Log(isPlayer);
+        List<GameObject> deck;
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (isPlayer)
+        {
+            deck = gameManager.deckTemp;
+        }
+        else
+        {
+            deck = gameManager.deckEnemyTemp;
+        }
 
+        if (deck.Count <= 2 && deck.Count > 0)
+        {
+            for (int i = 0; i < deck.Count; i++)
+            {
+                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+            }
+        }
+        else if (deck.Count >= 3)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+            }
+        }
+        else
+        {
+            Debug.Log("no more card");
+        }
     }
 }

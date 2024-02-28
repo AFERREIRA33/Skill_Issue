@@ -13,8 +13,38 @@ public class OpponentsDeckChaos : Cards
         reusable = true;
     }
 
-    public override void UseCard()
+    public override void UseCard(bool isPlayer)
     {
+        Debug.Log(isPlayer);
+        List<GameObject> deck;
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (!isPlayer)
+        {
+            deck = gameManager.deckTemp;
+        }
+        else
+        {
+            deck = gameManager.deckEnemyTemp;
+        }
+
+        int loop = deck.Count;
+        int index;
+        List<GameObject> deckShuffle = new List<GameObject>();
+        for (int i = 0; i < loop; i++)
+        {
+            index = Random.Range(0, deck.Count);
+            deckShuffle.Add(deck[index]);
+            deck.RemoveAt(index);
+        }
+
+        if (!isPlayer)
+        {
+            gameManager.deckTemp = deckShuffle;
+        }
+        else
+        {
+            gameManager.deckEnemyTemp = deckShuffle;
+        }
 
     }
 }

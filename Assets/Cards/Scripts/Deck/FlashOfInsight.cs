@@ -14,8 +14,30 @@ public class FlashOfInsight : Cards
         reusable = true;
     }
 
-    public override void UseCard()
+    public override void UseCard(bool isPlayer)
     {
-
+        List<GameObject> deck;
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (!isPlayer)
+        {
+            deck = gameManager.deckTemp;
+        } else
+        {
+            deck = gameManager.deckEnemyTemp;
+        }
+        
+        if(deck.Count == 1)
+        {
+            Debug.Log(deck[0].GetComponent<Cards>().cardName);
+        } else if(deck.Count >= 2) 
+        {
+            for (int i = 0;  i < 2; i++)
+            {
+                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+            }
+        } else
+        {
+            Debug.Log("no more card");
+        }
     }
 }

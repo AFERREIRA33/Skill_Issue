@@ -9,5 +9,5 @@ public class Cards : MonoBehaviour
     public int weight;
     public bool reusable;
     public bool activable;
-    public virtual void UseCard(){}
+    public virtual void UseCard(bool isPlayer){}
 }

@@ -14,7 +14,7 @@ public class ShuffleExchange : Cards
         reusable = true;
     }
 
-    public override void UseCard()
+    public override void UseCard(bool isPlayer)
     {
 
     }

@@ -12,7 +12,7 @@ public class PrudentShuffle : Cards
         weight = 0;
         reusable = true;
     }
-    public override void UseCard()
+    public override void UseCard(bool isPlayer)
     {
 
     }
