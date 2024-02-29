@@ -11,7 +11,6 @@ using static UnityEngine.GraphicsBuffer;
 public class IaController : MonoBehaviour
 {
     private GameObject player;
-    private float distance = 1.3f;
     public Tilemap obstacle;
     private bool findPath = true;
     private List<Vector3> pathList = new List<Vector3>();
@@ -197,59 +196,60 @@ public class IaController : MonoBehaviour
 
     void ReachPlayer()
     {
-        pathDico["up"] = Vector3.Distance(new Vector3(posTested.x, posTested.y + distance, -1), player.transform.position);
-        pathDico["down"] = Vector3.Distance(new Vector3(posTested.x, posTested.y - distance, -1), player.transform.position);
-        pathDico["left"] = Vector3.Distance(new Vector3(posTested.x - distance, posTested.y, -1), player.transform.position);
-        pathDico["right"] = Vector3.Distance(new Vector3(posTested.x + distance, posTested.y, -1), player.transform.position);
+        
+        //pathDico["up"] = Vector3.Distance(new Vector3(posTested.x, posTested.y + distance, -1), player.transform.position);
+        //pathDico["down"] = Vector3.Distance(new Vector3(posTested.x, posTested.y - distance, -1), player.transform.position);
+        //pathDico["left"] = Vector3.Distance(new Vector3(posTested.x - distance, posTested.y, -1), player.transform.position);
+        //pathDico["right"] = Vector3.Distance(new Vector3(posTested.x + distance, posTested.y, -1), player.transform.position);
 
 
-        float min = pathDico.Values.Min();
-        string pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-        setPosTested(pathDicoKey, transform.position);
-        if (pathList.Count - 1 > 0)
-        {
-            if (pathList.Contains(posTested))
-            {
-                pathDico[pathDicoKey] = 2147483647;
-                min = pathDico.Values.Min();
-                pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-                setPosTested(pathDicoKey, transform.position);
-            }
-        }
+        //float min = pathDico.Values.Min();
+        //string pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        //setPosTested(pathDicoKey, transform.position);
+        //if (pathList.Count - 1 > 0)
+        //{
+        //    if (pathList.Contains(posTested))
+        //    {
+        //        pathDico[pathDicoKey] = 2147483647;
+        //        min = pathDico.Values.Min();
+        //        pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        //        setPosTested(pathDicoKey, transform.position);
+        //    }
+        //}
 
-        while (!NoWall(posTested))
-        {
-            pathDico[pathDicoKey] = 2147483647;
-            min = pathDico.Values.Min();
-            pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-            setPosTested(pathDicoKey, transform.position);
-
-
-            if (pathList.Count - 1 > 0)
-            {
-                if (pathList.Contains(posTested))
-                {
-
-                    Debug.Log("test");
-                    pathDico[pathDicoKey] = 2147483647;
-                    min = pathDico.Values.Min();
-                    pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-                    setPosTested(pathDicoKey, transform.position);
+        //while (!NoWall(posTested))
+        //{
+        //    pathDico[pathDicoKey] = 2147483647;
+        //    min = pathDico.Values.Min();
+        //    pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        //    setPosTested(pathDicoKey, transform.position);
 
 
-                }
-            }
+        //    if (pathList.Count - 1 > 0)
+        //    {
+        //        if (pathList.Contains(posTested))
+        //        {
 
-        }
+        //            Debug.Log("test");
+        //            pathDico[pathDicoKey] = 2147483647;
+        //            min = pathDico.Values.Min();
+        //            pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        //            setPosTested(pathDicoKey, transform.position);
+
+
+        //        }
+        //    }
+
+        //}
         
 
 
-        pathList.Add(posTested);
-        if(pathList.Count > 6) {
-            pathList.RemoveAt(0);
-        }
-        Debug.Log(pathDicoKey);
-        transform.Translate(Vector3.Normalize(pathList[pathList.Count - 1] - transform.position) * Time.deltaTime * speed);
+        //pathList.Add(posTested);
+        //if(pathList.Count > 6) {
+        //    pathList.RemoveAt(0);
+        //}
+        //Debug.Log(pathDicoKey);
+        //transform.Translate(Vector3.Normalize(pathList[pathList.Count - 1] - transform.position) * Time.deltaTime * speed);
 
     }
 
@@ -264,10 +264,10 @@ public class IaController : MonoBehaviour
         while (findPath)
         {
             saveLastPos = posTested;
-            pathDico["up"] = Vector3.Distance(new Vector3(posTested.x, posTested.y + distance, -1), targetPath.transform.position);
-            pathDico["down"] = Vector3.Distance(new Vector3(posTested.x, posTested.y - distance, -1), targetPath.transform.position);
-            pathDico["left"] = Vector3.Distance(new Vector3(posTested.x - distance, posTested.y, -1), targetPath.transform.position);
-            pathDico["right"] = Vector3.Distance(new Vector3(posTested.x + distance, posTested.y, -1), targetPath.transform.position);
+            pathDico["up"] = Vector3.Distance(posTested + Vector3.up, targetPath.transform.position);
+            pathDico["down"] = Vector3.Distance(posTested + Vector3.down, targetPath.transform.position);
+            pathDico["left"] = Vector3.Distance(posTested + Vector3.left, targetPath.transform.position);
+            pathDico["right"] = Vector3.Distance(posTested + Vector3.right, targetPath.transform.position);
             
 
             float min = pathDico.Values.Min();
@@ -315,7 +315,6 @@ public class IaController : MonoBehaviour
                 findPath = false;
 
             }
-            pathDico.Clear();
             count += 1;
         }
 
@@ -327,19 +326,19 @@ public class IaController : MonoBehaviour
     {
         if (posTry == "up")
         {
-            posTested = new Vector3(newTestesPos.x, newTestesPos.y + distance, -1);
+            posTested = newTestesPos + Vector3.up;
         }
         else if (posTry == "down")
         {
-            posTested = new Vector3(newTestesPos.x, newTestesPos.y - distance, -1);
+            posTested = newTestesPos + Vector3.down;
         }
         else if (posTry == "right")
         {
-            posTested = new Vector3(newTestesPos.x + distance, newTestesPos.y, -1);
+            posTested = newTestesPos + Vector3.right;
         }
         else if (posTry == "left")
         {
-            posTested = new Vector3(newTestesPos.x - distance, newTestesPos.y, -1);
+            posTested = newTestesPos + Vector3.left;
         }
     }
 

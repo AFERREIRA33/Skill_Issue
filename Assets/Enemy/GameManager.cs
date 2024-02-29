@@ -26,4 +26,20 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    void IaPioche()
+    {
+        int poidChoiceBase = -1;
+        GameObject ChooseCard;
+        if (deckEnemyTemp.Count - 1 > 0)
+        {
+            for(int i=0; i < deckEnemyTemp.Count; i++)
+            {
+                if (deckEnemyTemp[i].GetComponent<Cards>().weight)
+                {
+
+                }
+            }
+        }
+    }
 }
