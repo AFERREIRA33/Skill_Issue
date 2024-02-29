@@ -175,105 +175,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &151907802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 151907804}
-  - component: {fileID: 151907803}
-  m_Layer: 0
-  m_Name: Card_Cloaked_Maneuver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &151907803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151907802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d4b237898428314b9a8b3932ca7b8af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardName: Cloaked Maneuver
-  description: Invisibility (10 seconds) as long as no touch or blow is given (not
-    reusable)
-  weight: 0
-  reusable: 1
-  activable: 0
---- !u!4 &151907804
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151907802}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3326154, y: -0.4797706, z: 4.24662}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &590527784
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 590527786}
-  - component: {fileID: 590527785}
-  m_Layer: 0
-  m_Name: Card_Shielded_Augmentation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &590527785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590527784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af42707d1b2d7a4fb2b11cbc831cd02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardName: Shielded Augmentation
-  description: Add a shield of 25 HP
-  weight: 0
-  reusable: 1
-  activable: 0
---- !u!4 &590527786
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 590527784}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3326154, y: -0.4797706, z: 4.24662}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &811964807 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1618160363967387278, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
@@ -351,55 +252,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &853544638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 853544640}
-  - component: {fileID: 853544639}
-  m_Layer: 0
-  m_Name: Card_Rapid_Fire_Boost
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &853544639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853544638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b46bf0de80e1804eb6ac004b9fefd76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardName: Rapid fire boost
-  description: Increase shooting speed by 25%
-  weight: 0
-  reusable: 1
-  activable: 0
---- !u!4 &853544640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853544638}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3326154, y: -0.4797706, z: 4.24662}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1064180379
 GameObject:
@@ -532,55 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e837a4341f78648a822e7ea8ca92eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2096493728
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2096493730}
-  - component: {fileID: 2096493729}
-  m_Layer: 0
-  m_Name: Card_Double_Dash_Mastery
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2096493729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096493728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f96b9fd9f30eaf4797716c28e4fe452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardName: Double Dash Mastery
-  description: Can do Double Dash
-  weight: 0
-  reusable: 1
-  activable: 0
---- !u!4 &2096493730
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2096493728}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3326154, y: -0.4797706, z: 4.24662}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1618160364402910206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -739,7 +542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1618160364333066476, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000008057799
+      value: -0.000004043102
       objectReference: {fileID: 0}
     - target: {fileID: 1618160364333066479, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_TagString
@@ -898,7 +701,7 @@ PrefabInstance:
       objectReference: {fileID: 2247300798807304606, guid: 72d1a5ff36ddfa744affec2bcc04199a, type: 3}
     - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
       propertyPath: allCards.Array.size
-      value: 10
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
       propertyPath: allCards.Array.data[0]
@@ -940,6 +743,22 @@ PrefabInstance:
       propertyPath: allCards.Array.data[9]
       value: 
       objectReference: {fileID: 5278642026083962721, guid: 844feea346cb6234aad2926bda9d9110, type: 3}
+    - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
+      propertyPath: allCards.Array.data[10]
+      value: 
+      objectReference: {fileID: 1547250678865516939, guid: 8c985cb5a678f284abc2b5c06769f933, type: 3}
+    - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
+      propertyPath: allCards.Array.data[11]
+      value: 
+      objectReference: {fileID: 82998203844274502, guid: 7a64e512935bcd74f8fea371fc8062af, type: 3}
+    - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
+      propertyPath: allCards.Array.data[12]
+      value: 
+      objectReference: {fileID: 6840932522456641120, guid: a81c26b3892358a48aa2e8578cbec276, type: 3}
+    - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
+      propertyPath: allCards.Array.data[13]
+      value: 
+      objectReference: {fileID: 3378745987531103788, guid: b80d52d86d6e01f428d72247b52f05ce, type: 3}
     - target: {fileID: 6694357033704321421, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -49,18 +49,20 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> FuseList(List<GameObject> list1, List<GameObject> list2)
     {
-        /*
+     
         int index;
         List<GameObject> list = list1.Union(list2).ToList();
         List<GameObject> result = new List<GameObject>();
-        for (int i = 0; i < 10; i++)
+        bool firstActive = true;
+        while(result.Count < 10) 
         {
             index = Random.Range(0, list.Count);
-            result.Add(list[index]);
+            if(!list[index].GetComponent<Cards>().activable || firstActive)
+            {
+                result.Add(list[index]);
+            }
             list.RemoveAt(index);
         }
         return result;
-        */
-        return list1.Union(list2).ToList();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DecksDestiny : Cards
@@ -29,21 +30,23 @@ public class DecksDestiny : Cards
 
         if (deck.Count <= 2 && deck.Count > 0)
         {
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = "";
             for (int i = 0; i < deck.Count; i++)
             {
-                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+                GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text += deck[i].GetComponent<Cards>().cardName+ "\n";
             }
         }
         else if (deck.Count >= 3)
         {
-            for (int i = 0; i < 2; i++)
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = "";
+            for (int i = 0; i < 3; i++)
             {
-                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+                GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text += deck[i].GetComponent<Cards>().cardName + "\n";
             }
         }
         else
         {
-            Debug.Log("no more card");
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = "no more card";
         }
     }
 }

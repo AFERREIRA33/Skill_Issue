@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,19 +26,20 @@ public class FlashOfInsight : Cards
         {
             deck = gameManager.deckEnemyTemp;
         }
-        
-        if(deck.Count == 1)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (deck.Count == 1)
         {
-            Debug.Log(deck[0].GetComponent<Cards>().cardName);
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = deck[0].GetComponent<Cards>().cardName;
         } else if(deck.Count >= 2) 
         {
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = "";
             for (int i = 0;  i < 2; i++)
             {
-                Debug.Log(deck[i].GetComponent<Cards>().cardName);
+                GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text += deck[i].GetComponent<Cards>().cardName+ "\n";
             }
         } else
         {
-            Debug.Log("no more card");
+            GameObject.FindGameObjectWithTag("Info").GetComponent<TextMeshProUGUI>().text = "no more card";
         }
     }
 }

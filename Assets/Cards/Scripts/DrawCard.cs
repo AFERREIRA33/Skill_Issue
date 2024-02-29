@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
 
@@ -31,6 +32,7 @@ public class DrawCard : MonoBehaviour
             gameManager.deckEnemyTemp = Shuffle(gameManager.deckEnemy); 
         }
         Draw();
+        EventSystem.current.SetSelectedGameObject(GameObject.FindGameObjectWithTag("Start"));
     }
 
     public void Draw()

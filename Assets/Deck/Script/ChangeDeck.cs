@@ -175,6 +175,7 @@ public class ChangeDeck : MonoBehaviour
             add.onClick.RemoveAllListeners();
             gameManager.hudModif.SetActive(false);
         }
+        Time.timeScale = 1;
     }
 
     public void ExchangeCard()
@@ -232,6 +233,8 @@ public class ChangeDeck : MonoBehaviour
             }
             add.onClick.RemoveAllListeners();
             gameManager.hudModif.SetActive(false);
+            Time.timeScale = 1;
+
         }
     }
 }

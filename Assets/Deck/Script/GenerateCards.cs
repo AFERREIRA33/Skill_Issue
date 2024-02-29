@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class GenerateCards : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GenerateCards : MonoBehaviour
             button.GetComponent<ChangeDeck>().inDeck = false;
             button.GetComponent<ChangeDeck>().add = add;
             button.GetComponent<Button>().onClick.AddListener(button.GetComponent<ChangeDeck>().GetInfo);
+            EventSystem.current.SetSelectedGameObject(button);
         }
     }
 }

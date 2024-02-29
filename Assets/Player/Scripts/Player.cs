@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -59,6 +60,7 @@ public class Player : MonoBehaviour
         attackCollider = transform.GetChild(0).gameObject;
         if(gameManager.playerCard.GetComponent<Cards>().activable)
         {
+            GameObject.FindGameObjectWithTag("Activable").GetComponent<TextMeshProUGUI>().text = gameManager.playerCard.GetComponent<Cards>().cardName;
             activable = gameManager.playerCard;
         } else
         {

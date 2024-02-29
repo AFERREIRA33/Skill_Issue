@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShuffleExchange : Cards
@@ -22,6 +23,7 @@ public class ShuffleExchange : Cards
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager.cardDraw.Count > 0 && gameManager.deckTemp.Count > 0)
         {
+            Time.timeScale = 0;
             if (isPlayer)
             {
                 gameManager.hudModif.SetActive(true);
@@ -47,6 +49,8 @@ public class ShuffleExchange : Cards
 
 
                     button.GetComponent<ChangeDeck>().add = add;
+                    EventSystem.current.SetSelectedGameObject(button);
+
 
                 }
                 foreach (GameObject card in cardDraw)
@@ -66,6 +70,8 @@ public class ShuffleExchange : Cards
                     add.onClick.RemoveAllListeners();
                     add.onClick.AddListener(button.GetComponent<ChangeDeck>().ExchangeCard);
                     button.GetComponent<ChangeDeck>().add = add;
+                    EventSystem.current.SetSelectedGameObject(button);
+
 
                 }
             }

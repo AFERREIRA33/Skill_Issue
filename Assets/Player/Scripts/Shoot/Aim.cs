@@ -38,7 +38,10 @@ public class Aim : MonoBehaviour
         {
             coolDownShoot = 0.3f;
         }
-        Fire();
+        if( Time.timeScale > 0)
+        {
+            Fire();
+        }
     }
 
     public void Fire()

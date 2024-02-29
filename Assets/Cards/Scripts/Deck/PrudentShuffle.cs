@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PrudentShuffle : Cards
@@ -21,6 +22,7 @@ public class PrudentShuffle : Cards
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager.deckTemp.Count > 0) 
         {
+            Time.timeScale = 0;
             List<GameObject> deck;
             if (isPlayer)
             {
@@ -46,7 +48,7 @@ public class PrudentShuffle : Cards
 
 
                     button.GetComponent<ChangeDeck>().add = add;
-
+                    EventSystem.current.SetSelectedGameObject(button);
                 }
             }
             else
