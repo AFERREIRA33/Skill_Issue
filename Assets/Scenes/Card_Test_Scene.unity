@@ -524,6 +524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Deck_Creation
       objectReference: {fileID: 0}
+    - target: {fileID: 1618160363927198570, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1618160363967387278, guid: 0b804af4232147a49a5612d0b0db9626, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -667,6 +671,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
+      propertyPath: buttonCard
+      value: 
+      objectReference: {fileID: 6152763424816335783, guid: d47f390a075f3254782cb13056807991, type: 3}
     - target: {fileID: 6694357033704321420, guid: 882ee648420165045879ab2f7a64cbde, type: 3}
       propertyPath: deck.Array.size
       value: 0

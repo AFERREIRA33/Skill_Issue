@@ -26,6 +26,7 @@ public class GenerateCards : MonoBehaviour
             button.GetComponent<ChangeDeck>().scrollViewContentDeck = scrollViewContentDeck;
             button.GetComponent<ChangeDeck>().inDeck = true;
             button.GetComponent<ChangeDeck>().add = add;
+            button.GetComponent<Button>().onClick.AddListener(button.GetComponent<ChangeDeck>().GetInfo);
         }
         foreach (GameObject card in gameManager.allCards)
         {
@@ -36,6 +37,7 @@ public class GenerateCards : MonoBehaviour
             button.GetComponent<ChangeDeck>().scrollViewContentDeck = scrollViewContentDeck;
             button.GetComponent<ChangeDeck>().inDeck = false;
             button.GetComponent<ChangeDeck>().add = add;
+            button.GetComponent<Button>().onClick.AddListener(button.GetComponent<ChangeDeck>().GetInfo);
         }
     }
 }

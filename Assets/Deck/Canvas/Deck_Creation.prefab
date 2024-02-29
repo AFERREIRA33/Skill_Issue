@@ -567,7 +567,7 @@ RectTransform:
   - {fileID: 1618160364098219362}
   - {fileID: 6273079502907387057}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1076,7 +1076,7 @@ GameObject:
   - component: {fileID: 1618160364333066476}
   m_Layer: 5
   m_Name: Content
-  m_TagString: Untagged
+  m_TagString: Deck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2339,7 +2339,7 @@ GameObject:
   - component: {fileID: 1618160365569453697}
   m_Layer: 5
   m_Name: Content
-  m_TagString: Untagged
+  m_TagString: AllCards
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

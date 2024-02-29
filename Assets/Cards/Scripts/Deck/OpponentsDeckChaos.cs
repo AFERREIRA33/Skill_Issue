@@ -27,15 +27,8 @@ public class OpponentsDeckChaos : Cards
             deck = gameManager.deckEnemyTemp;
         }
 
-        int loop = deck.Count;
-        int index;
-        List<GameObject> deckShuffle = new List<GameObject>();
-        for (int i = 0; i < loop; i++)
-        {
-            index = Random.Range(0, deck.Count);
-            deckShuffle.Add(deck[index]);
-            deck.RemoveAt(index);
-        }
+        
+        List<GameObject> deckShuffle = Shuffle(deck);
 
         if (!isPlayer)
         {

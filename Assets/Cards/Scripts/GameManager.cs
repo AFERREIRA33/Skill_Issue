@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameObject enemyCard;
     public List<GameObject> enemyCardDraw;
 
+    public GameObject hudModif;
+    public GameObject buttonCard;
+    public bool isFinish = false;
     public void SaveDeck()
     {
         GameObject allCardsButtons = GameObject.FindGameObjectWithTag("AllCards");
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Test_Game_Part_Draw_Card");
     }
 
-    public List<GameObject> FuseList(List<GameObject> list1, List<GameObject> list2)
+    private List<GameObject> FuseList(List<GameObject> list1, List<GameObject> list2)
     {
         /*
         int index;
