@@ -24,11 +24,20 @@ public class Player : MonoBehaviour
     private float stunTimer = 3f;
     private float turretTimer = 10f;
     private bool canSpawnTurret = true;
+    private float invisibleTimer = 10f;
 
-    
+    [HideInInspector] public bool stopInvisible;
+
+    [HideInInspector] public bool reverseShootWithSword;
+    [HideInInspector] public bool doubleDash;
+    [HideInInspector] public bool speedUpShoot;
+    [HideInInspector] public bool invisible = true;
+
+    // A FAIRE RAJOUTER TABLEAU CARD POUR CARTE RECUPERER
+
+
     void Start()
     {
-
         isGuard = false;
         playerInput = new PlayerInput();
         playerInput.Player_Map.Enable();
@@ -40,6 +49,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (invisible)
+        {
+            Invisible();
+        }
         if (playerInput.Player_Map.Guard.IsPressed() && !isStun)
         {
             if (timerGuard > 0)
@@ -67,9 +80,13 @@ public class Player : MonoBehaviour
         {
             if (attackCollider != null)
             {
+                if (invisible)
+                {
+                    stopInvisible = true;
+                }
                 attackCollider.SetActive(true);
             }
-            
+
         }
         else
         {
@@ -82,7 +99,7 @@ public class Player : MonoBehaviour
         {
             if (activable != null)
             {
-                
+
             }
         }
     }
@@ -93,6 +110,12 @@ public class Player : MonoBehaviour
         {
             damage = 0;
         }
+
+        if (invisible)
+        {
+            stopInvisible = true;
+        }
+
         else
         {
             currentHP -= damage;
@@ -155,10 +178,10 @@ public class Player : MonoBehaviour
 
     IEnumerator MultiProjectile()
     {
-        
+
         while (timeMultiShoot > 0)
         {
-            
+
             timeMultiShoot -= Time.deltaTime;
             yield return null;
         }
@@ -181,7 +204,7 @@ public class Player : MonoBehaviour
 
     IEnumerator TimeTurret()
     {
-        while (turretTimer >0)
+        while (turretTimer > 0)
         {
             turretTimer -= Time.deltaTime;
             yield return null;
@@ -189,6 +212,35 @@ public class Player : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("PlayerTurret"));
     }
 
-    // Stun Projectile
+    // Shield
 
+    private void Shield()
+    {
+        currentHP += 25;
+        MaxHp += 25;
+        hpbar.UpdateHPSlider(currentHP, MaxHp);
+    }
+
+    // Invisible
+
+    private void Invisible()
+    {
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(TimeInvisible());
+        if (stopInvisible)
+        {
+            invisibleTimer = 0;
+            
+        }
+        if (invisibleTimer <=0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
+
+    IEnumerator TimeInvisible()
+    {
+        yield return new WaitForSeconds(invisibleTimer);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+    }
 }

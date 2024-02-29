@@ -13,10 +13,13 @@ public class Aim : MonoBehaviour
     public Vector2 aimDirection;
     public bool multiShoot;
     public bool isPoisonGrenade;
+    [HideInInspector]public float coolDownShoot = .4f;
     private Vector3 mousePos;
     private PlayerInput playerInput;
     private float angle;
     private float multiShootPosY;
+    private bool canFire = true;
+
 
 
 
@@ -31,6 +34,15 @@ public class Aim : MonoBehaviour
 
     void Update()
     {
+        if (gameObject.GetComponent<Player>().speedUpShoot)
+        {
+            coolDownShoot = 0.3f;
+        }
+        Fire();
+    }
+
+    public void Fire()
+    {
         if (Gamepad.all.Count < 1 && !playerTransform.gameObject.GetComponent<Player>().isStun)
         {
             if (Time.timeScale > 0)
@@ -39,8 +51,9 @@ public class Aim : MonoBehaviour
                 Vector3 rotation = mousePos - transform.position;
                 float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0, 0, rotZ);
-                if (Input.GetMouseButtonDown(0) && !gameObject.GetComponent<Player>().isGuard)
+                if (Input.GetMouseButtonDown(0) && !gameObject.GetComponent<Player>().isGuard && canFire)
                 {
+                    gameObject.GetComponent<Player>().stopInvisible = true;
                     if (multiShoot)
                     {
                         for (int i = 0; i < 3; i++)
@@ -66,7 +79,9 @@ public class Aim : MonoBehaviour
                         }
                         Instantiate(projectile, transformProjectile.position, Quaternion.identity);
                     }
-                    
+                    canFire = false;
+                    StartCoroutine(CoolDown());
+
                 }
             }
         }
@@ -76,11 +91,12 @@ public class Aim : MonoBehaviour
             {
                 aimDirection = playerInput.Player_Map.Rotation.ReadValue<Vector2>();
                 angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle-90));
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
 
             }
-            if (playerInput.Player_Map.Fire.triggered && !gameObject.GetComponent<Player>().isGuard)
+            if (playerInput.Player_Map.Fire.triggered && !gameObject.GetComponent<Player>().isGuard && canFire)
             {
+                gameObject.GetComponent<Player>().stopInvisible = true;
                 if (multiShoot)
                 {
                     for (int i = 0; i < 3; i++)
@@ -106,8 +122,17 @@ public class Aim : MonoBehaviour
                     }
                     Instantiate(projectile, transformProjectile.position, Quaternion.identity);
                 }
-                
+                canFire = false;
+                StartCoroutine(CoolDown());
+
             }
         }
+
+    }
+
+    private IEnumerator CoolDown()
+    {
+        yield return new WaitForSeconds(coolDownShoot);
+        canFire = true;
     }
 }

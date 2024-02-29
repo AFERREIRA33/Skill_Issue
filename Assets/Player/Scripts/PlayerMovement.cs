@@ -11,12 +11,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 3f;
 
     private float activeMoveSpeed;
-    public float dashSpeed;
+    private float dashSpeed = 10f;
 
-    public float dashLength = .5f, dashCooldown = 1f;
+    private float doubleDashSpeed = 15f;
+    public float dashLength = .5f, dashCooldown = 1f, doubleDashLength = .5f;
 
     private float dashCounter;
     private float dashCooldownCounter;
+
+    private int numberDash = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -36,29 +39,72 @@ public class PlayerMovement : MonoBehaviour
         {
             movementVector = playerInput.Player_Map.Movement.ReadValue<Vector2>();
             rigidbody2d.velocity = movementVector * activeMoveSpeed;
-            if (playerInput.Player_Map.Dash.triggered || Input.GetMouseButtonDown(1) && Gamepad.all.Count < 1)
+            if (gameObject.GetComponent<Player>().doubleDash)
             {
-                if (dashCounter <= 0 && dashCooldownCounter <= 0)
+                
+                if ((playerInput.Player_Map.Dash.triggered || Input.GetMouseButtonDown(1)) && Gamepad.all.Count < 1)
                 {
-                    activeMoveSpeed = dashSpeed;
-                    dashCounter = dashLength;
+                    if (dashCounter <= 0)
+                    {
+                        if (numberDash < 1) 
+                        {
+                            activeMoveSpeed = dashSpeed;
+                            dashCounter = dashLength;
+                            numberDash++; 
+                        }
+                        else if (numberDash == 1) 
+                        {
+                            
+                            activeMoveSpeed = doubleDashSpeed;
+                            dashCounter = doubleDashLength;
+                            numberDash = 0; 
+                        }
+                    }
+                }
+
+                if (dashCounter > 0)
+                {
+                    dashCounter -= Time.deltaTime;
+
+                    if (dashCounter <= 0)
+                    {
+                        activeMoveSpeed = speed;
+                        dashCooldownCounter = dashCooldown;
+                    }
+                }
+
+                if (dashCooldownCounter > 0)
+                {
+                    dashCooldownCounter -= Time.deltaTime;
                 }
             }
-
-            if (dashCounter > 0)
+            else
             {
-                dashCounter -= Time.deltaTime;
-
-                if (dashCounter <= 0)
+                if (playerInput.Player_Map.Dash.triggered || Input.GetMouseButtonDown(1) && Gamepad.all.Count < 1)
                 {
-                    activeMoveSpeed = speed;
-                    dashCooldownCounter = dashCooldown;
+                    if (dashCounter <= 0 && dashCooldownCounter <= 0)
+                    {
+                        activeMoveSpeed = dashSpeed;
+                        dashCounter = dashLength;
+                    }
+                }
+
+                if (dashCounter > 0)
+                {
+                    dashCounter -= Time.deltaTime;
+
+                    if (dashCounter <= 0)
+                    {
+                        activeMoveSpeed = speed;
+                        dashCooldownCounter = dashCooldown;
+                    }
+                }
+                if (dashCooldownCounter > 0)
+                {
+                    dashCooldownCounter -= Time.deltaTime;
                 }
             }
-            if (dashCooldownCounter > 0)
-            {
-                dashCooldownCounter -= Time.deltaTime;
-            }
+            
         }
         
     }

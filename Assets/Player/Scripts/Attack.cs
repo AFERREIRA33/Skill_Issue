@@ -17,6 +17,11 @@ public class Attack : MonoBehaviour
             {
                 collider.gameObject.GetComponent<Turret>().OnTakeDamage(damage);
             }
+
+            //if (collider.tag == "ProjectileEnemy")
+            //{
+                
+            //}
         }
 
     }

@@ -477,9 +477,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  dashSpeed: 10
   dashLength: 0.5
   dashCooldown: 1
+  doubleDashLength: 0.5
 --- !u!50 &4271644538554500790
 Rigidbody2D:
   serializedVersion: 4
@@ -518,11 +518,17 @@ MonoBehaviour:
   activable: {fileID: 0}
   turret: {fileID: 0}
   stunObject: {fileID: 2647923849131127429}
+  invicibleObject: {fileID: 0}
   isStun: 0
+  stunProjectile: 0
   timerGuard: 4
   reloadGuard: 2
   isGuard: 0
   isInvicible: 0
+  reverseShootWithSword: 0
+  doubleDash: 0
+  speedUpShoot: 0
+  invisible: 0
 --- !u!114 &4271644538554500784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +548,7 @@ MonoBehaviour:
   aimDirection: {x: 0, y: 0}
   multiShoot: 0
   isPoisonGrenade: 0
+  coolDownShoot: 0.4
 --- !u!61 &-8764362875249741718
 BoxCollider2D:
   m_ObjectHideFlags: 0
