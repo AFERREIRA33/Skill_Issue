@@ -31,12 +31,23 @@ public class GameManager : MonoBehaviour
     {
         int poidChoiceBase = -1;
         GameObject ChooseCard;
+        int randomValue;
         if (deckEnemyTemp.Count - 1 > 0)
         {
             for(int i=0; i < deckEnemyTemp.Count; i++)
             {
-                if (deckEnemyTemp[i].GetComponent<Cards>().weight)
+                if (deckEnemyTemp[i].GetComponent<Cards>().weight > poidChoiceBase)
                 {
+                    ChooseCard= deckEnemyTemp[i];
+                    poidChoiceBase = ChooseCard.GetComponent<Cards>().weight;
+                }else if (deckEnemyTemp[i].GetComponent<Cards>().weight == poidChoiceBase)
+                {
+                    randomValue = Random.Range(0, 2);
+                    if(randomValue == 1)
+                    {
+                        ChooseCard = deckEnemyTemp[i];
+                        poidChoiceBase = ChooseCard.GetComponent<Cards>().weight;
+                    }
 
                 }
             }

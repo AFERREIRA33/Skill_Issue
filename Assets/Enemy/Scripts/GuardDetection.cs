@@ -8,7 +8,6 @@ public class GuardDetection : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("test");
         if (collision.CompareTag("Player"))
         {
             enemyDetected= true;

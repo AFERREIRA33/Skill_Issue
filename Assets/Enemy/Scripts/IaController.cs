@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.GraphicsBuffer;
@@ -32,12 +33,26 @@ public class IaController : MonoBehaviour
     private GameObject childDetectionPlayer;
     private bool resetPathLIst = false;
     private Vector3 lastPosReach;
+    private bool search = true;
 
+    private bool invincibility = false;
+    private bool grenade = false;
+    private bool stunBall = false;
+    private bool threeBallShoot = false;
+    private bool turret = false;
+    private bool hasActivable = false;
 
     private int currentHealth = 100;
     private int maxHealth = 100;
     private int damageSword = 20;
     private int damageShoot = 10;
+    private int layer_mask;
+    private bool shootReload = false;
+    private GameObject swordRangeDetectionChild;
+    private GameObject swordDamagerChild;
+    private GameObject swordSpriteChild;
+    private bool swordAttackReload = false;
+    private GameObject shootRangeDetectionChild;
 
     private bool isGuard = false;
     public float timerGuard = 4f;
@@ -57,8 +72,14 @@ public class IaController : MonoBehaviour
 
         guardDetectionChild = transform.GetChild(0).gameObject;
         childDetectionPlayer = transform.GetChild(1).gameObject;
+        swordRangeDetectionChild = transform.GetChild(2).gameObject;
+        shootRangeDetectionChild = transform.GetChild(3).gameObject;
+        swordDamagerChild= transform.GetChild(4).gameObject;
+        swordSpriteChild= transform.GetChild(5).gameObject;
 
-        if(gameManager == null) {
+        layer_mask = LayerMask.GetMask("Wall");
+
+        if (gameManager == null) {
             gameManager = FindObjectOfType<GameManager>();
         }
         myTargetCard = gameManager.GetComponent<GameManager>().enemyCardDraw;
@@ -66,16 +87,20 @@ public class IaController : MonoBehaviour
         {
             targetPath = myTargetCard[0];
         }
-        SearchPath();
+        //SearchPath();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!childDetectionPlayer.GetComponent<PlayerDetection>().GetDetection()) {
-            resetPathLIst = true;
-            Debug.Log(Vector3.Distance(transform.position, lastPosReach));
+        if (!childDetectionPlayer.GetComponent<PlayerDetection>().GetDetection() && !isGuard) {
+            if (search)
+            {
+                SearchPath();
+                search = false;
+                resetPathLIst = true;
+            }
             if (Mathf.FloorToInt(Vector3.Distance(transform.position, lastPosReach)) <= 2)
             {
                 if(myTargetCard.Count -1 > 0)
@@ -93,14 +118,11 @@ public class IaController : MonoBehaviour
                 
 
 
-                if (count == 0)
+
+                if((Mathf.FloorToInt(Vector3.Distance(transform.position, targetPath.transform.position)) > 2))
                 {
                     findPath = true;
                     SearchPath();
-                    Debug.Log("test");
-                    //StartCoroutine(SearchTimer());
-
-                    count += 1;
                 }
 
             }
@@ -118,15 +140,24 @@ public class IaController : MonoBehaviour
         {
             if (resetPathLIst)
             {
+                Debug.Log("test");
+                search = true;
                 pathList.Clear();
                 resetPathLIst= false;
+                findPath = true;
+                ReachPlayer();
             }
-            ReachPlayer();
+            if (Mathf.FloorToInt(Vector3.Distance(transform.position, posTested)) <= 2)
+            {
+                ReachPlayer();
+            }
+            transform.Translate(Vector3.Normalize(posTested - transform.position) * Time.deltaTime * speed);
+
         }
 
 
 
-
+        //gestion attack player
         if (guardDetectionChild.GetComponent<GuardDetection>().GetDetection() && currentHealth < 50)
         {
             if (timerGuard > 0)
@@ -154,6 +185,59 @@ public class IaController : MonoBehaviour
 
                 isGuard = false;
             }
+        }
+
+        if (swordRangeDetectionChild.GetComponent<SwordDetection>().GetDetection() && !isGuard)
+        {
+            if (!swordAttackReload)
+            {
+                swordDamagerChild.SetActive(true);
+                swordSpriteChild.SetActive(true);
+                StartCoroutine(WaitUntilNextAttack());
+                StartCoroutine(HideSwordSprite());
+                swordAttackReload = true;
+            }
+        }else if (hasActivable)
+        {
+            if(invincibility && currentHealth < 25 && guardDetectionChild.GetComponent<GuardDetection>().GetDetection() && !isGuard)
+            {
+                Debug.Log("use Invincibility");
+            }
+            else if(invincibility && currentHealth < 50 && shootRangeDetectionChild.GetComponent<ShootDetection>().GetDetection() && !isGuard)
+            {
+                Debug.Log("Call turret");
+            }
+            else if((grenade || threeBallShoot || stunBall) && shootRangeDetectionChild.GetComponent<ShootDetection>().GetDetection() && !isGuard)
+            {
+                if (grenade)
+                {
+                    Debug.Log("grenade");
+                }
+                else if (threeBallShoot)
+                {
+                    Debug.Log("three ball shoot");
+                }
+                else if(stunBall)
+                {
+                    Debug.Log("stun ball");
+                }
+            }
+        }
+        else if (shootRangeDetectionChild.GetComponent<ShootDetection>().GetDetection() && !isGuard)
+        {
+
+            if (!shootReload)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, -(transform.position - player.transform.position), Vector3.Distance(transform.position, player.transform.position), layer_mask);
+                if (!hit)
+                {
+
+                    Debug.Log("Shoot");
+                }
+                shootReload= true;
+                StartCoroutine(ReloadShoot());
+            }
+
         }
 
     }
@@ -196,60 +280,25 @@ public class IaController : MonoBehaviour
 
     void ReachPlayer()
     {
-        
-        //pathDico["up"] = Vector3.Distance(new Vector3(posTested.x, posTested.y + distance, -1), player.transform.position);
-        //pathDico["down"] = Vector3.Distance(new Vector3(posTested.x, posTested.y - distance, -1), player.transform.position);
-        //pathDico["left"] = Vector3.Distance(new Vector3(posTested.x - distance, posTested.y, -1), player.transform.position);
-        //pathDico["right"] = Vector3.Distance(new Vector3(posTested.x + distance, posTested.y, -1), player.transform.position);
+        pathDico["up"] = Vector3.Distance(transform.position + Vector3.up, player.transform.position);
+        pathDico["down"] = Vector3.Distance(transform.position + Vector3.down, player.transform.position);
+        pathDico["left"] = Vector3.Distance(transform.position + Vector3.left, player.transform.position);
+        pathDico["right"] = Vector3.Distance(transform.position + Vector3.right, player.transform.position);
+
+        float min = pathDico.Values.Min();
+        string pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+        setPosTested(pathDicoKey, transform.position);
 
 
-        //float min = pathDico.Values.Min();
-        //string pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-        //setPosTested(pathDicoKey, transform.position);
-        //if (pathList.Count - 1 > 0)
-        //{
-        //    if (pathList.Contains(posTested))
-        //    {
-        //        pathDico[pathDicoKey] = 2147483647;
-        //        min = pathDico.Values.Min();
-        //        pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-        //        setPosTested(pathDicoKey, transform.position);
-        //    }
-        //}
+        while (!NoWall(posTested))
+        {
+            pathDico[pathDicoKey] = 2147483647;
+            min = pathDico.Values.Min();
+            pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
+            setPosTested(pathDicoKey, transform.position);
 
-        //while (!NoWall(posTested))
-        //{
-        //    pathDico[pathDicoKey] = 2147483647;
-        //    min = pathDico.Values.Min();
-        //    pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-        //    setPosTested(pathDicoKey, transform.position);
+        }
 
-
-        //    if (pathList.Count - 1 > 0)
-        //    {
-        //        if (pathList.Contains(posTested))
-        //        {
-
-        //            Debug.Log("test");
-        //            pathDico[pathDicoKey] = 2147483647;
-        //            min = pathDico.Values.Min();
-        //            pathDicoKey = pathDico.First(entry => entry.Value == min).Key;
-        //            setPosTested(pathDicoKey, transform.position);
-
-
-        //        }
-        //    }
-
-        //}
-        
-
-
-        //pathList.Add(posTested);
-        //if(pathList.Count > 6) {
-        //    pathList.RemoveAt(0);
-        //}
-        //Debug.Log(pathDicoKey);
-        //transform.Translate(Vector3.Normalize(pathList[pathList.Count - 1] - transform.position) * Time.deltaTime * speed);
 
     }
 
@@ -362,5 +411,26 @@ public class IaController : MonoBehaviour
         count = 0;
     }
 
+    public int GetDamageSword()
+    {
+        return damageSword;
+    }
 
+    IEnumerator WaitUntilNextAttack()
+    {
+        yield return new WaitForSeconds(2f);
+        swordAttackReload = false;
+    }
+    IEnumerator HideSwordSprite()
+    {
+        yield return new WaitForSeconds(1f);
+        swordDamagerChild.SetActive(false);
+        swordSpriteChild.SetActive(false);
+    }
+
+    IEnumerator ReloadShoot()
+    {
+        yield return new WaitForSeconds(0.5f);
+        shootReload = false;
+    }
 }

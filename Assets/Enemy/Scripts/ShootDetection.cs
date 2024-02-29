@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDetection : MonoBehaviour
+public class ShootDetection : MonoBehaviour
 {
     private bool enemyDetected = false;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("Player"))
         {
             enemyDetected = true;
@@ -26,5 +26,4 @@ public class PlayerDetection : MonoBehaviour
     {
         return enemyDetected;
     }
-
 }
