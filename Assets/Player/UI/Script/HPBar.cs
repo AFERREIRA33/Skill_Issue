@@ -9,7 +9,7 @@ public class HPBar : MonoBehaviour
     [SerializeField] private Slider slider;
 
 
-    public void UpdateHPSlider(int current, int target)
+    public void UpdateHPSlider(float current, float target)
     {
         slider.maxValue = target;
         slider.value = current;

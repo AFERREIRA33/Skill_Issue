@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    public int damage = 20;
+    public float damage = 20;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        //collider.GetComponent<Enemy>().OnTakeDamage(damage);
+
+        if (collider != null)
+        {
+            //collider.GetComponent<Enemy>().OnTakeDamage(damage);
+
+            if (collider.tag == "PlayerTurret" /*|| collider.tag == "EnemyTurret"*/)
+            {
+                collider.gameObject.GetComponent<Turret>().OnTakeDamage(damage);
+            }
+        }
+
     }
 }

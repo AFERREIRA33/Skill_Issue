@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.FilePathAttribute;
 
-public class Projectile : MonoBehaviour
+public class Grenade : MonoBehaviour
 {
     public float force;
-    public float damage = 10;
     private GameObject player;
     private Vector3 mousePos;
     private Rigidbody2D rb;
+    private GameObject poison;
+    private float poisonTimer = 10f;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        poison = transform.GetChild(0).gameObject;
         rb = GetComponent<Rigidbody2D>();
         if (Gamepad.all.Count >= 1)
         {
@@ -35,25 +36,26 @@ public class Projectile : MonoBehaviour
         }
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (player.GetComponent<Player>().stunProjectile)
-        {
-            //collider.GetComponent<Enemy>().Stuned();
-            Destroy(gameObject);
-        }
-        if (collider.tag != "ProjectilePlayer" && collider.tag != "Player" && collider.tag != "DetectionArea")
-        {
-            Destroy(gameObject);
-        }
-
-        if (collider.tag == "PlayerTurret" /*|| collider.tag == "EnemyTurret"*/)
-        {
-            collider.gameObject.GetComponent<Turret>().OnTakeDamage(damage);
-            Destroy(gameObject);
-        }
-        //collider.GetComponent<Enemy>().OnTakeDamage(damage);
-
+        force = 0f;
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        poison.SetActive(true);
+        StartCoroutine(PoisonTimer());
     }
+
+    IEnumerator PoisonTimer()
+    {
+        while (poisonTimer >0) 
+        {
+            poisonTimer -= Time.deltaTime;
+            yield return null;
+        }
+        if (poisonTimer <= 0)
+        {
+            poison.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
+
 }

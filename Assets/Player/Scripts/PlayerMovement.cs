@@ -32,31 +32,35 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movementVector = playerInput.Player_Map.Movement.ReadValue<Vector2>();
-        rigidbody2d.velocity = movementVector * activeMoveSpeed;
-        if (playerInput.Player_Map.Dash.triggered || Input.GetMouseButtonDown(1) && Gamepad.all.Count < 1)
+        if (!gameObject.GetComponent<Player>().isStun)
         {
-            if (dashCounter <= 0 && dashCooldownCounter <=0) 
+            movementVector = playerInput.Player_Map.Movement.ReadValue<Vector2>();
+            rigidbody2d.velocity = movementVector * activeMoveSpeed;
+            if (playerInput.Player_Map.Dash.triggered || Input.GetMouseButtonDown(1) && Gamepad.all.Count < 1)
             {
-                activeMoveSpeed = dashSpeed;
-                dashCounter = dashLength;
+                if (dashCounter <= 0 && dashCooldownCounter <= 0)
+                {
+                    activeMoveSpeed = dashSpeed;
+                    dashCounter = dashLength;
+                }
+            }
+
+            if (dashCounter > 0)
+            {
+                dashCounter -= Time.deltaTime;
+
+                if (dashCounter <= 0)
+                {
+                    activeMoveSpeed = speed;
+                    dashCooldownCounter = dashCooldown;
+                }
+            }
+            if (dashCooldownCounter > 0)
+            {
+                dashCooldownCounter -= Time.deltaTime;
             }
         }
-
-        if (dashCounter >0)
-        {
-            dashCounter -= Time.deltaTime;
-
-            if (dashCounter <= 0)
-            {
-                activeMoveSpeed = speed;
-                dashCooldownCounter = dashCooldown;
-            }
-        }
-        if (dashCooldownCounter > 0)
-        {
-            dashCooldownCounter -= Time.deltaTime;
-        }
+        
     }
 
 }
