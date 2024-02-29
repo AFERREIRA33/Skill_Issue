@@ -18,7 +18,7 @@ public class PoisonGrenade : Cards
         if (isPlayer)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            // pas trouver la fonction
+            player.GetComponent<Aim>().isPoisonGrenade = true;
         }
         else
         {

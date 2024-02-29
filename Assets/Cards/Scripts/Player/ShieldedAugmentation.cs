@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class StunBullet : Cards
+public class ShieldedAugmentation : Cards
 {
-    // Start is called before the first frame update
     void Start()
     {
-        cardName = "Stun Bullet";
-        description = "A bullet that stuns the enemy for 3 seconds";
+        cardName = "Shielded Augmentation";
+        description = "Add a shield of 25 HP";
         weight = 0;
         reusable = true;
-        activable = true;
+        activable = false;
     }
     public override void UseCard(bool isPlayer)
     {
@@ -20,7 +19,7 @@ public class StunBullet : Cards
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             // pas  trouver fonction
-            player.GetComponent<Player>().stunProjectile = true;
+            player.GetComponent<Player>().Shield();
         }
         else
         {

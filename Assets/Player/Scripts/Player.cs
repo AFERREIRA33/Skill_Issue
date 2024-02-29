@@ -235,7 +235,7 @@ public class Player : MonoBehaviour
 
     // Shield
 
-    private void Shield()
+    public void Shield()
     {
         currentHP += 25;
         MaxHp += 25;
@@ -244,7 +244,7 @@ public class Player : MonoBehaviour
 
     // Invisible
 
-    private void Invisible()
+    public void Invisible()
     {
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         StartCoroutine(TimeInvisible());

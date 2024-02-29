@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class StunBullet : Cards
+public class DoubleDashMastery : Cards
 {
-    // Start is called before the first frame update
     void Start()
     {
-        cardName = "Stun Bullet";
-        description = "A bullet that stuns the enemy for 3 seconds";
+        cardName = "Double Dash Mastery";
+        description = "Can do Double Dash";
         weight = 0;
         reusable = true;
-        activable = true;
+        activable = false;
     }
     public override void UseCard(bool isPlayer)
     {
@@ -20,7 +18,7 @@ public class StunBullet : Cards
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             // pas  trouver fonction
-            player.GetComponent<Player>().stunProjectile = true;
+            player.GetComponent<Player>().doubleDash = true;
         }
         else
         {

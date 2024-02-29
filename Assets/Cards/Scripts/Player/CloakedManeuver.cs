@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class StunBullet : Cards
+public class CloakedManeuver : Cards
 {
-    // Start is called before the first frame update
     void Start()
     {
-        cardName = "Stun Bullet";
-        description = "A bullet that stuns the enemy for 3 seconds";
+        cardName = "Cloaked Maneuver";
+        description = "Invisibility (10 seconds) as long as no touch or blow is given (not reusable)";
         weight = 0;
-        reusable = true;
-        activable = true;
+        reusable = false;
+        activable = false;
     }
     public override void UseCard(bool isPlayer)
     {
@@ -20,7 +19,7 @@ public class StunBullet : Cards
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             // pas  trouver fonction
-            player.GetComponent<Player>().stunProjectile = true;
+            player.GetComponent<Player>().Invisible();
         }
         else
         {
