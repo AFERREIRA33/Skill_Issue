@@ -14,6 +14,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test_Game_Part_Draw_Card.unity
     guid: b36aca130a823df4f81eace113f1455c
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map_1.unity
+    guid: 789449630c51d644c9b4c53a9b0b8adf
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map_2.unity
+    guid: b09800ec14a0e51409ca37977f17509c
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map_3.unity
+    guid: f321f4e1285e5cf4591bcda36f56c56e
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map_4.unity
+    guid: a7acb6b3ca1042944bbd8742a3156df2
+  - enabled: 1
+    path: Assets/Scenes/Maps/Map_5.unity
+    guid: 8d8e90152ee937a41971ec6dcfe619d0
   m_configObjects: {}
-  m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 9e0d2f30a0c31e54f90df6338935a69e, type: 2}

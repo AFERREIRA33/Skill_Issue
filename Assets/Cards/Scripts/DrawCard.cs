@@ -50,8 +50,8 @@ public class DrawCard : MonoBehaviour
             gameManager.enemyCard = enemyCard;
             gameManager.deckEnemyTemp.RemoveAt(0);
             
-            myCard.GetComponent<Cards>().UseCard(true);
-            enemyCard.GetComponent<Cards>().UseCard(false);
+            //myCard.GetComponent<Cards>().UseCard(true);
+            //enemyCard.GetComponent<Cards>().UseCard(false);
 
         } else
         {
@@ -89,6 +89,6 @@ public class DrawCard : MonoBehaviour
             gameManager.isFinish = true;
         }
         
-        SceneManager.LoadScene("Test_Game_Part_Draw_Card");
+        SceneManager.LoadScene("Map_5");
     }
 }

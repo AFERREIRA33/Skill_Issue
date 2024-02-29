@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -33,17 +34,36 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool speedUpShoot;
     [HideInInspector] public bool invisible = true;
 
+    private static GameManager gameManager;
     // A FAIRE RAJOUTER TABLEAU CARD POUR CARTE RECUPERER
-
+    public List<GameObject> cardGet;
 
     void Start()
     {
+
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+        gameManager.hudModif = GameObject.FindGameObjectWithTag("HudModif");
+        if (gameManager.hudModif != null)
+        {
+            gameManager.hudModif.SetActive(false);
+        }
+
         isGuard = false;
         playerInput = new PlayerInput();
         playerInput.Player_Map.Enable();
         currentHP = MaxHp;
         hpbar.UpdateHPSlider(currentHP, MaxHp);
         attackCollider = transform.GetChild(0).gameObject;
+        if(gameManager.playerCard.GetComponent<Cards>().activable)
+        {
+            activable = gameManager.playerCard;
+        } else
+        {
+            gameManager.playerCard.GetComponent<Cards>().UseCard(true);
+        }
     }
 
 
@@ -55,6 +75,7 @@ public class Player : MonoBehaviour
         }
         if (playerInput.Player_Map.Guard.IsPressed() && !isStun)
         {
+            SceneManager.LoadScene("Test_Game_Part_Draw_Card");
             if (timerGuard > 0)
             {
                 timerGuard -= Time.deltaTime;
@@ -99,7 +120,7 @@ public class Player : MonoBehaviour
         {
             if (activable != null)
             {
-
+                activable.GetComponent<Cards>().UseCard(true);
             }
         }
     }

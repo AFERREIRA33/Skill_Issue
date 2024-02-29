@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using TMPro;
 using UnityEditor.PackageManager;
 using UnityEngine;
@@ -28,12 +29,36 @@ public class ChangeDeck : MonoBehaviour
         if (inDeck)
         {
             transform.SetParent(scrollViewContentAllCards, true);
+            inDeck = !inDeck;
         }
         else
         {
-            transform.SetParent(scrollViewContentDeck, true);
+            bool alreadyHaveActive = false;
+            if (card.GetComponent<Cards>().activable) 
+            { 
+                foreach(Transform cardInDeck in scrollViewContentDeck.transform)
+                {
+                    if (cardInDeck.gameObject.GetComponent<ChangeDeck>().card.GetComponent<Cards>().activable)
+                    {
+                        alreadyHaveActive = true;
+                        break;
+                    }
+                }
+                if (!alreadyHaveActive)
+                {
+                    transform.SetParent(scrollViewContentDeck, true);
+                    inDeck = !inDeck;
+                } else
+                {
+                    Debug.Log("Already have activable");
+                }
+            }
+            else
+            {
+                transform.SetParent(scrollViewContentDeck, true);
+                inDeck = !inDeck;
+            }
         }
-        inDeck = !inDeck;
     }
 
     public void SwitchPrudentShuffle()

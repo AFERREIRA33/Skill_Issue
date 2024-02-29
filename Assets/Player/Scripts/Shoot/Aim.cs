@@ -91,7 +91,7 @@ public class Aim : MonoBehaviour
             {
                 aimDirection = playerInput.Player_Map.Rotation.ReadValue<Vector2>();
                 angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle - 90));
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             }
             if (playerInput.Player_Map.Fire.triggered && !gameObject.GetComponent<Player>().isGuard && canFire)

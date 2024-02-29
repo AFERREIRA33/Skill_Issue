@@ -516,15 +516,16 @@ MonoBehaviour:
   MaxHp: 100
   hpbar: {fileID: 0}
   activable: {fileID: 0}
-  turret: {fileID: 0}
+  turret: {fileID: 1705927855430943778, guid: 9af272e80c224de47899a0a6ddff76df, type: 3}
   stunObject: {fileID: 2647923849131127429}
-  invicibleObject: {fileID: 0}
+  invicibleObject: {fileID: 711212290370744567}
   isStun: 0
   stunProjectile: 0
   timerGuard: 4
   reloadGuard: 2
   isGuard: 0
   isInvicible: 0
+  stopInvisible: 0
   reverseShootWithSword: 0
   doubleDash: 0
   speedUpShoot: 0
@@ -541,8 +542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e67fc678330454eb54bc02edddb142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  grenade: {fileID: 0}
+  projectile: {fileID: 4534218284691427447, guid: 33a6d8a9c66192c499fe4b6527d62d2c, type: 3}
+  grenade: {fileID: 8141826149037501443, guid: 1bd40942af7752043980bb76f30c0f91, type: 3}
   transformProjectile: {fileID: 4271644538554500789}
   playerTransform: {fileID: 4271644538554500789}
   aimDirection: {x: 0, y: 0}
