@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Test_Game_Part_Draw_Card.unity
     guid: b36aca130a823df4f81eace113f1455c
   m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 9e0d2f30a0c31e54f90df6338935a69e, type: 2}
