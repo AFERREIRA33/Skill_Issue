@@ -3,13 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using System.Linq;
-using UnityEngine.UI;
 
 public class SettingMenu : MonoBehaviour
 {
-    [SerializeField] private AudioMixer audio;
+    [SerializeField] private AudioMixer _audio;
     public TMP_Dropdown resolutionDropdown;
-    private Resolution[] resolutions;
+    private Resolution[] _resolutions;
     
     // Start is called before the first frame update
     void Start()
@@ -17,15 +16,15 @@ public class SettingMenu : MonoBehaviour
         int bestResolutionIndex = 0;
         List<string> optionsDropdowns = new List<string>();
         
-        resolutions = Screen.resolutions.Select(resolution => new Resolution {width = resolution.width, height = resolution.height}).Distinct().ToArray();
+        _resolutions = Screen.resolutions.Select(resolution => new Resolution {width = resolution.width, height = resolution.height}).Distinct().ToArray();
         resolutionDropdown.ClearOptions();
         
-        for (int index = 0; index < resolutions.Length; index++)
+        for (int index = 0; index < _resolutions.Length; index++)
         {
-            string option = resolutions[index].width + "x" + resolutions[index].height;
+            string option = _resolutions[index].width + "x" + _resolutions[index].height;
             optionsDropdowns.Add(option);
 
-            if (resolutions[index].width == Screen.width && resolutions[index].height == Screen.height)
+            if (_resolutions[index].width == Screen.width && _resolutions[index].height == Screen.height)
             {
                 bestResolutionIndex = index;
             }
@@ -44,12 +43,12 @@ public class SettingMenu : MonoBehaviour
     public void SetVolume(float value)
     {
         Debug.Log(value);
-        audio.SetFloat("volume", value);
+        _audio.SetFloat("volume", value);
     }
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
+        Resolution resolution = _resolutions[resolutionIndex];
         
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         resolutionDropdown.value = resolutionIndex;

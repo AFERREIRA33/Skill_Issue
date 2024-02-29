@@ -1564,7 +1564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935b2700667a1b1498ddcb8d4eed1cb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: {fileID: 24100000, guid: f4006d57cdd198446b968974f127806f, type: 2}
+  _audio: {fileID: 0}
   resolutionDropdown: {fileID: 1977710346}
 --- !u!114 &993926914
 MonoBehaviour:
@@ -2897,7 +2897,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38170661ecbe7ad43958abc1fc755817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: PauseMenu
+  target: MapChoice
   isSettingsOpen: 0
   settingMenu: {fileID: 993926911}
 --- !u!4 &1706924525
@@ -3374,7 +3374,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1706924524}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: LoadMapChoice
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

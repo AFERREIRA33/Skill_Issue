@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +21,7 @@ public class MainMenu : MonoBehaviour
         }
     }
     
-    public void LoadGame()
+    public void LoadMapChoice()
     {
         SceneManager.LoadScene(target);
     }
