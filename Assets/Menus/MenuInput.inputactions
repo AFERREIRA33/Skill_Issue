@@ -1,0 +1,56 @@
+{
+    "name": "MenuInput",
+    "maps": [
+        {
+            "name": "MenuNav",
+            "id": "bfe5c68d-99f5-4d1d-9ea1-199b15499c1c",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "0e7291a3-31b7-43b4-a1db-8888f96f3732",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "22529d63-1ee7-4f2d-8c99-890165809b13",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5b86de4-d878-406f-a037-a6b2fb652d18",
+                    "path": "<DualShockGamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83fdf362-bcc7-4c2c-b9aa-bd8e30a37398",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
