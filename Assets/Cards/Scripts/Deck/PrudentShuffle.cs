@@ -55,6 +55,41 @@ public class PrudentShuffle : Cards
             {
                 // Enemy prudent shuffle
                 deck = Shuffle(gameManager.deckEnemyTemp);
+                int poidChoiceBase = -1;
+                GameObject ChooseCard = new GameObject();
+                int randomValue;
+                if (gameManager.deckEnemyTemp.Count - 1 > 0)
+                {
+                    for (int i = 0; i < gameManager.deckEnemyTemp.Count; i++)
+                    {
+                        if (gameManager.deckEnemyTemp[i].GetComponent<Cards>().weight > poidChoiceBase)
+                        {
+                            ChooseCard = gameManager.deckEnemyTemp[i];
+                            poidChoiceBase = ChooseCard.GetComponent<Cards>().weight;
+                        }
+                        else if (gameManager.deckEnemyTemp[i].GetComponent<Cards>().weight == poidChoiceBase)
+                        {
+                            randomValue = Random.Range(0, 2);
+                            if (randomValue == 1)
+                            {
+                                ChooseCard = gameManager.deckEnemyTemp[i];
+                                poidChoiceBase = ChooseCard.GetComponent<Cards>().weight;
+                            }
+
+                        }
+                    }
+                    Debug.Log(ChooseCard.GetComponent<Cards>().cardName);
+                    List<GameObject> newDeck = new List<GameObject>();
+                    newDeck.Add(ChooseCard);
+                    foreach (GameObject cardDeck in gameManager.deckTemp)
+                    {
+                        if (ChooseCard.name != cardDeck.name)
+                        {
+                            newDeck.Add(cardDeck);
+                        }
+                    }
+                }
+                Time.timeScale = 1;
             }
         }
     }

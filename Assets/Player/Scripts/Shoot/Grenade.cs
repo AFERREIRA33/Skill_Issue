@@ -36,12 +36,16 @@ public class Grenade : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        force = 0f;
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
-        poison.SetActive(true);
-        StartCoroutine(PoisonTimer());
+        if (collision.tag == "Wall" || collision.tag == "Ia")
+        {
+            force = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            poison.SetActive(true);
+            StartCoroutine(PoisonTimer());
+        }
+
     }
 
     IEnumerator PoisonTimer()

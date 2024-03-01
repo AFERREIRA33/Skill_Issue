@@ -23,7 +23,7 @@ public class RapidFireBoost : Cards
         }
         else
         {
-
+            GameObject.FindGameObjectWithTag("Ia").GetComponent<IaController>().coolDownShoot *= 0.75f;
         }
     }
 }

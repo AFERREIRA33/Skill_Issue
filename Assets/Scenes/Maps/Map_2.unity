@@ -12410,11 +12410,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6247872651290753114, guid: 41bf99f1f98aac74e9682a92d36436fd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0003551843
+      value: -0.000007196156
       objectReference: {fileID: 0}
     - target: {fileID: 6247872651468899992, guid: 41bf99f1f98aac74e9682a92d36436fd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0003551843
+      value: -0.000007196156
       objectReference: {fileID: 0}
     - target: {fileID: 6247872651794501957, guid: 41bf99f1f98aac74e9682a92d36436fd, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12447,7 +12447,7 @@ GameObject:
   - component: {fileID: 1414951269}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -38,22 +38,28 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (player.GetComponent<Player>().stunProjectile)
+        if (collider.tag == "Ia")
         {
-            //collider.GetComponent<Enemy>().Stuned();
-            Destroy(gameObject);
-        }
-        if (collider.tag != "ProjectilePlayer" && collider.tag != "Player" && collider.tag != "DetectionArea")
-        {
-            Destroy(gameObject);
-        }
+            if (player.GetComponent<Player>().stunProjectile)
+            {
+                //collider.GetComponent<Enemy>().Stuned();
+                Destroy(gameObject);
+            }
+            if (collider.tag != "ProjectilePlayer" && collider.tag != "Player" && collider.tag != "DetectionArea")
+            {
+                Destroy(gameObject);
+            }
 
-        if (collider.tag == "PlayerTurret" /*|| collider.tag == "EnemyTurret"*/)
+            if (collider.tag == "PlayerTurret" /*|| collider.tag == "EnemyTurret"*/)
+            {
+                collider.gameObject.GetComponent<Turret>().OnTakeDamage(damage);
+                Destroy(gameObject);
+            }
+            collider.GetComponent<IaController>().OnTakeDamage(damage);
+        } if (collider.tag == "Wall")
         {
-            collider.gameObject.GetComponent<Turret>().OnTakeDamage(damage);
             Destroy(gameObject);
         }
-        //collider.GetComponent<Enemy>().OnTakeDamage(damage);
 
     }
 }

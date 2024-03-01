@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 334214322731133242}
   m_Layer: 0
   m_Name: IaPrefab
-  m_TagString: Untagged
+  m_TagString: Ia
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -495,6 +495,9 @@ MonoBehaviour:
   obstacle: {fileID: 0}
   timerGuard: 4
   reloadGuard: 2
+  targetTransform: {fileID: 0}
+  projectile: {fileID: 5626046395934296413, guid: cc8d65a39dc9fb146b12ae762ae369df, type: 3}
+  canFire: 0
 --- !u!61 &334214322731133242
 BoxCollider2D:
   m_ObjectHideFlags: 0

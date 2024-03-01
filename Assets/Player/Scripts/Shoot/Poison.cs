@@ -10,7 +10,10 @@ public class Poison : MonoBehaviour
     {
         if (collision.tag == ("Player"))
         {
-            //collision.GetComponent<Player>().OnTakeDamage(damage);
+            collision.GetComponent<Player>().OnTakeDamage(damage);
+        } else if (collision.tag == ("Ia"))
+        {
+            collision.GetComponent<IaController>().OnTakeDamage(damage);
         }
     }
 }

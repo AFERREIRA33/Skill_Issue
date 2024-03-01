@@ -20179,11 +20179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6247872651290753114, guid: 41bf99f1f98aac74e9682a92d36436fd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00011712891
+      value: 0.00022508859
       objectReference: {fileID: 0}
     - target: {fileID: 6247872651468899992, guid: 41bf99f1f98aac74e9682a92d36436fd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00011712891
+      value: 0.00022508859
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -20204,7 +20204,7 @@ GameObject:
   - component: {fileID: 926286190}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

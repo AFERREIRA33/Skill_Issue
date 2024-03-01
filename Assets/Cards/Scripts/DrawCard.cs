@@ -20,11 +20,6 @@ public class DrawCard : MonoBehaviour
         {
             gameManager = FindObjectOfType<GameManager>();
         }
-        gameManager.hudModif = GameObject.FindGameObjectWithTag("HudModif");
-        if (gameManager.hudModif != null)
-        {
-            gameManager.hudModif.SetActive(false);
-        }
 
         if (gameManager.deckTemp.Count == 0 && !gameManager.isFinish)
         {

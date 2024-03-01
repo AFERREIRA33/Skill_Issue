@@ -23,14 +23,20 @@ public class TurretProjectile : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+
             collision.gameObject.GetComponent<Player>().OnTakeDamage(damage);
             Destroy(gameObject);
         }
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.tag == "Ia")
         {
-            //collision.gameObject.GetComponent<Enemy>().OnTakeDamage(damage);
+            collision.gameObject.GetComponent<IaController>().OnTakeDamage(damage);
+            Destroy(gameObject);
         }
-        
+        else if (collision.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 }

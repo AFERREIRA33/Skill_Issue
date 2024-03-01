@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTest : MonoBehaviour
 {
     private bool isGuard = false;
-    private int currentHealth = 100;
+    private float currentHealth = 100;
     
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class PlayerTest : MonoBehaviour
     {
         
     }
-    public void OnTakeDamage(int damage)
+    public void OnTakeDamage(float damage)
     {
 
         if (!isGuard)

@@ -27,6 +27,10 @@ public class GameManager : MonoBehaviour
     public GameObject hudModif;
     public GameObject buttonCard;
     public bool isFinish = false;
+
+    public int pointPlayer = 0;
+    public int pointEnemy = 0;
+
     public void SaveDeck()
     {
         GameObject allCardsButtons = GameObject.FindGameObjectWithTag("AllCards");
@@ -60,9 +64,29 @@ public class GameManager : MonoBehaviour
             if(!list[index].GetComponent<Cards>().activable || firstActive)
             {
                 result.Add(list[index]);
+                firstActive = false;
             }
             list.RemoveAt(index);
         }
         return result;
+    }
+    public void WhoWin(bool isPlayer)
+    {
+        if (isPlayer)
+        {
+            pointEnemy++;
+        }
+        else
+        {
+            pointPlayer++;
+        }
+        if (pointPlayer > 5)
+        {
+            Debug.Log("You Win");
+        } else if (pointEnemy > 5)
+        {
+            Debug.Log("You loose");
+
+        }
     }
 }

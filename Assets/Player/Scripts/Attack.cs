@@ -11,7 +11,10 @@ public class Attack : MonoBehaviour
 
         if (collider != null)
         {
-            //collider.GetComponent<Enemy>().OnTakeDamage(damage);
+            if (collider.gameObject.tag == "Ia")
+            {
+                collider.GetComponent<IaController>().OnTakeDamage(damage);
+            }
 
             if (collider.tag == "PlayerTurret" /*|| collider.tag == "EnemyTurret"*/)
             {

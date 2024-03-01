@@ -9,7 +9,7 @@ public class MakeDamage : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerTest>().OnTakeDamage(this.GetComponentInParent<IaController>().GetDamageSword());
+            collision.gameObject.GetComponent<Player>().OnTakeDamage(this.GetComponentInParent<IaController>().GetDamageSword());
         }
     }
 }

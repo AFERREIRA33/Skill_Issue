@@ -7,7 +7,7 @@ public class Detection : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (gameObject.transform.parent.tag != "PlayerTurret" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "ProjectilePlayer")
+        if (gameObject.transform.parent.tag != "PlayerTurret" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "ProjectilePlayer" && collision.gameObject.tag != "TurretProjectile")
         {
             gameObject.transform.GetComponentInParent<Turret>().targetTransform = collision.transform;
             gameObject.transform.GetComponentInParent<Turret>().isInArea = true;

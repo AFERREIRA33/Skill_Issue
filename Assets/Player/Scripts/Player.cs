@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public GameObject invicibleObject;
     public bool isStun;
     public bool stunProjectile;
-    private float currentHP;
+    public float currentHP;
     public float timerGuard = 4f;
     public float reloadGuard = 2f;
     public bool isGuard;
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool reverseShootWithSword;
     [HideInInspector] public bool doubleDash;
     [HideInInspector] public bool speedUpShoot;
-    [HideInInspector] public bool invisible = true;
+    [HideInInspector] public bool invisible = false;
 
     private static GameManager gameManager;
     // A FAIRE RAJOUTER TABLEAU CARD POUR CARTE RECUPERER
@@ -77,7 +77,6 @@ public class Player : MonoBehaviour
         }
         if (playerInput.Player_Map.Guard.IsPressed() && !isStun)
         {
-            SceneManager.LoadScene("Test_Game_Part_Draw_Card");
             if (timerGuard > 0)
             {
                 timerGuard -= Time.deltaTime;
@@ -129,6 +128,7 @@ public class Player : MonoBehaviour
 
     public void OnTakeDamage(float damage)
     {
+
         if (isGuard || isInvicible)
         {
             damage = 0;
@@ -145,8 +145,10 @@ public class Player : MonoBehaviour
             hpbar.UpdateHPSlider(currentHP, MaxHp);
             if (currentHP <= 0)
             {
-                Debug.Log("Dead");
+                gameManager.WhoWin(true);
                 hpbar.UpdateHPSlider(currentHP, MaxHp);
+                SceneManager.LoadScene("Test_Game_Part_Draw_Card");
+
             }
         }
     }

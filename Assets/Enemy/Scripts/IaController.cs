@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using static UnityEngine.GraphicsBuffer;
 
@@ -26,10 +28,10 @@ public class IaController : MonoBehaviour
     private GameObject targetPath;
     private Vector3 saveLastPos = new Vector3(-20000,-20000,-20000);
     private int count = 0;
-    private float speed = 2.0f;
+    public float speed = 2.0f;
     private bool findPlayer = false;
     private List<GameObject> myTargetCard= new List<GameObject>();
-    private static GameObject gameManager;
+    private static GameManager gameManager;
     private GameObject childDetectionPlayer;
     private bool resetPathLIst = false;
     private Vector3 lastPosReach;
@@ -43,10 +45,10 @@ public class IaController : MonoBehaviour
     private bool turret = false;
     private bool hasActivable = false;
 
-    private int currentHealth = 100;
-    private int maxHealth = 100;
-    private int damageSword = 20;
-    private int damageShoot = 10;
+    public float currentHealth = 100;
+    public float maxHealth = 100;
+    private float damageSword = 20;
+    private float damageShoot = 10;
     private int layer_mask;
     private bool shootReload = false;
     private GameObject swordRangeDetectionChild;
@@ -64,6 +66,15 @@ public class IaController : MonoBehaviour
     private bool assault = true;
     private bool saveYourLife = false;
 
+    public Transform targetTransform;
+    public GameObject projectile;
+    public  bool canFire = false;
+
+    private float invisibleTimer = 10f;
+
+    [HideInInspector] public bool stopInvisible = true;
+    public bool invisible = false;
+    [HideInInspector] public float coolDownShoot = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -81,19 +92,32 @@ public class IaController : MonoBehaviour
         layer_mask = LayerMask.GetMask("Wall");
 
         if (gameManager == null) {
-            //gameManager = FindObjectOfType<GameManagerIA>();
+            gameManager = FindObjectOfType<GameManager>();
         }
-        myTargetCard = gameManager.GetComponent<GameManagerIA>().enemyCardDraw;
-        if (myTargetCard.Count -1 > 0)
+        if (gameManager.enemyCard.GetComponent<Cards>().activable)
         {
-            targetPath = myTargetCard[0];
+            //GameObject.FindGameObjectWithTag("Activable").GetComponent<TextMeshProUGUI>().text = gameManager.playerCard.GetComponent<Cards>().cardName;
+            //hasActivable = gameManager.enemyCard;
         }
+        else
+        {
+            gameManager.enemyCard.GetComponent<Cards>().UseCard(false);
+        }
+        myTargetCard = gameManager.enemyCardDraw;
+        //if (myTargetCard.Count -1 > 0)
+        //{
+        //    targetPath = myTargetCard[0];
+        //}
         //SearchPath();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (invisible)
+        {
+            Invisible();
+        }
         if (!childDetectionPlayer.GetComponent<PlayerDetection>().GetDetection() && !isGuard) {
             if (search)
             {
@@ -253,29 +277,46 @@ public class IaController : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, -(transform.position - player.transform.position), Vector3.Distance(transform.position, player.transform.position), layer_mask);
                 if (!hit)
                 {
-
                     Debug.Log("Shoot");
+                    canFire = false;
+                    Fire();
+
                 }
-                shootReload= true;
+                shootReload = true;
                 StartCoroutine(ReloadShoot());
             }
 
         }
 
     }
+    private void Fire()
+    {
+        projectile.GetComponent<TurretProjectile>().target = targetTransform;
+        Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation);
+        StartCoroutine(CoolDown());
+    }
 
-    public void OnTakeDamage(int damage)
+    private IEnumerator CoolDown()
+    {
+        yield return new WaitForSeconds(coolDownShoot);
+        canFire = true;
+    }
+
+    public void OnTakeDamage(float damage)
     {
         
         if (!isGuard)
         {
             currentHealth -= damage;
+            Debug.Log(currentHealth + "/" + maxHealth); 
             //hpbar.UpdateHPSlider(currentHP, MaxHp);
             if (currentHealth <= 0)
             {
-                Destroy(this.gameObject);
+                gameManager.WhoWin(false);
+                SceneManager.LoadScene("Test_Game_Part_Draw_Card");
                 //hpbar.UpdateHPSlider(currentHP, MaxHp);
-            }else if(currentHealth <= 50)
+            }
+            else if(currentHealth <= 50)
             {
                 SwitchMode(true);
             }
@@ -452,7 +493,7 @@ public class IaController : MonoBehaviour
         count = 0;
     }
 
-    public int GetDamageSword()
+    public float GetDamageSword()
     {
         return damageSword;
     }
@@ -471,7 +512,29 @@ public class IaController : MonoBehaviour
 
     IEnumerator ReloadShoot()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(coolDownShoot);
         shootReload = false;
+    }
+
+    public void Invisible()
+    {
+        Debug.Log("Toto");
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(TimeInvisible());
+        if (stopInvisible)
+        {
+            invisibleTimer = 0;
+
+        }
+        if (invisibleTimer <= 0)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }
+
+    IEnumerator TimeInvisible()
+    {
+        yield return new WaitForSeconds(invisibleTimer);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 }

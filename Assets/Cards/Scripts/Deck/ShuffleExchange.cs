@@ -77,7 +77,68 @@ public class ShuffleExchange : Cards
             }
             else
             {
-                deck = Shuffle(gameManager.deckEnemyTemp);
+                int poidChoiceBase = -1;
+                int poidChoiceMin = 200;
+                GameObject ChooseCardDeckTemp = new GameObject();
+                GameObject ChooseCardDraw = new GameObject();
+                int randomValue;
+                if (gameManager.deckEnemyTemp.Count - 1 > 0 && gameManager.enemyCardDraw.Count - 1 > 0)
+                {
+                    for (int i = 0; i < gameManager.deckEnemyTemp.Count; i++)
+                    {
+                        if (gameManager.deckEnemyTemp[i].GetComponent<Cards>().weight > poidChoiceBase)
+                        {
+                            ChooseCardDeckTemp = gameManager.deckEnemyTemp[i];
+                            poidChoiceBase = ChooseCardDeckTemp.GetComponent<Cards>().weight;
+                        }
+                        else if (gameManager.deckEnemyTemp[i].GetComponent<Cards>().weight == poidChoiceBase)
+                        {
+                            randomValue = Random.Range(0, 2);
+                            if (randomValue == 1)
+                            {
+                                ChooseCardDeckTemp = gameManager.deckEnemyTemp[i];
+                                poidChoiceBase = ChooseCardDeckTemp.GetComponent<Cards>().weight;
+                            }
+
+                        }
+                    }
+                    for (int j = 0; j < gameManager.enemyCardDraw.Count; j++)
+                    {
+                        if (gameManager.enemyCardDraw[j].GetComponent<Cards>().weight < poidChoiceMin)
+                        {
+                            ChooseCardDraw = gameManager.enemyCardDraw[j];
+                            poidChoiceMin = ChooseCardDraw.GetComponent<Cards>().weight;
+                        }
+                        else if (gameManager.enemyCardDraw[j].GetComponent<Cards>().weight == poidChoiceMin)
+                        {
+                            randomValue = Random.Range(0, 2);
+                            if (randomValue == 1)
+                            {
+                                ChooseCardDraw = gameManager.enemyCardDraw[j];
+                                poidChoiceMin = ChooseCardDraw.GetComponent<Cards>().weight;
+                            }
+
+                        }
+                    }
+                    deck = new List<GameObject>(gameManager.deckTemp);
+                    List<GameObject> draw = new List<GameObject>(gameManager.cardDraw);
+                    foreach (GameObject card in draw)
+                    {
+                        if (card.name == ChooseCardDeckTemp.GetComponent<Cards>().name)
+                        {
+                            gameManager.cardDraw[draw.IndexOf(card)] = ChooseCardDraw;
+                            break;
+                        }
+                    }
+                    foreach (GameObject card in deck)
+                    {
+                        if (card.name == ChooseCardDraw.GetComponent<Cards>().name)
+                        {
+                            gameManager.deckTemp[deck.IndexOf(card)] = ChooseCardDeckTemp;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
