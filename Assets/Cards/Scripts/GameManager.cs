@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public int pointPlayer = 0;
     public int pointEnemy = 0;
 
+    public int numCard = 0;
     public void SaveDeck()
     {
         GameObject allCardsButtons = GameObject.FindGameObjectWithTag("AllCards");
@@ -48,7 +49,10 @@ public class GameManager : MonoBehaviour
     }
     public void LoadPlayTest()
     {
-        SceneManager.LoadScene("Test_Game_Part_Draw_Card");
+        if (numCard == 11)
+        {
+            SceneManager.LoadScene("Test_Game_Part_Draw_Card");
+        }
     }
 
     private List<GameObject> FuseList(List<GameObject> list1, List<GameObject> list2)
@@ -58,7 +62,7 @@ public class GameManager : MonoBehaviour
         List<GameObject> list = list1.Union(list2).ToList();
         List<GameObject> result = new List<GameObject>();
         bool firstActive = true;
-        while(result.Count < 10) 
+        while(result.Count < 11) 
         {
             index = Random.Range(0, list.Count);
             if(!list[index].GetComponent<Cards>().activable || firstActive)

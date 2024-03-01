@@ -16,6 +16,7 @@ public class ChangeDeck : MonoBehaviour
     public Transform scrollViewContentAllCards;
     public Transform scrollViewContentDeck;
     public Button add;
+    public int numCard = 0;
 
     public void GetInfo()
     {
@@ -26,37 +27,47 @@ public class ChangeDeck : MonoBehaviour
     }
     public void Add()
     {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+
         if (inDeck)
         {
-            transform.SetParent(scrollViewContentAllCards, true);
-            inDeck = !inDeck;
+            
+                transform.SetParent(scrollViewContentAllCards, true);
+                inDeck = !inDeck;
+                gameManager.numCard--;
         }
         else
         {
             bool alreadyHaveActive = false;
-            if (card.GetComponent<Cards>().activable) 
-            { 
-                foreach(Transform cardInDeck in scrollViewContentDeck.transform)
+            if (gameManager.numCard < 11)
+            {
+                if (card.GetComponent<Cards>().activable)
                 {
-                    if (cardInDeck.gameObject.GetComponent<ChangeDeck>().card.GetComponent<Cards>().activable)
+                    foreach (Transform cardInDeck in scrollViewContentDeck.transform)
                     {
-                        alreadyHaveActive = true;
-                        break;
+                        if (cardInDeck.gameObject.GetComponent<ChangeDeck>().card.GetComponent<Cards>().activable)
+                        {
+                            alreadyHaveActive = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyHaveActive)
+                    {
+                        transform.SetParent(scrollViewContentDeck, true);
+                        inDeck = !inDeck;
+                        gameManager.numCard++;
+                    }
+                    else
+                    {
+                        Debug.Log("Already have activable");
                     }
                 }
-                if (!alreadyHaveActive)
+                else
                 {
                     transform.SetParent(scrollViewContentDeck, true);
                     inDeck = !inDeck;
-                } else
-                {
-                    Debug.Log("Already have activable");
+                    gameManager.numCard++;
                 }
-            }
-            else
-            {
-                transform.SetParent(scrollViewContentDeck, true);
-                inDeck = !inDeck;
             }
         }
     }
