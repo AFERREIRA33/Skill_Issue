@@ -8,10 +8,15 @@ public class SettingMenu : MonoBehaviour
 {
     [SerializeField] private AudioMixer _audio;
     public TMP_Dropdown resolutionDropdown;
-    private Resolution[] _resolutions;
+    private Resolution[] _resolutions;  
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
+    {
+        InitResolutionsDropdown();
+    }
+
+    private void InitResolutionsDropdown()
     {
         int bestResolutionIndex = 0;
         List<string> optionsDropdowns = new List<string>();
@@ -42,7 +47,6 @@ public class SettingMenu : MonoBehaviour
     
     public void SetVolume(float value)
     {
-        Debug.Log(value);
         _audio.SetFloat("volume", value);
     }
 

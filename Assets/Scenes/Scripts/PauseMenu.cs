@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 enum GameState
 {
@@ -13,13 +15,15 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     [SerializeField] private GameObject settingMenu;
     private GameState currentState;
+    [SerializeField] private Button primaryPauseButton;
+    [SerializeField] private Button settingButton;
+    [SerializeField] private TMP_Dropdown primarySettingButton;
 
     public void Start()
     {
         pauseMenu.SetActive(false);
         settingMenu.SetActive(false);
         currentState = GameState.playing;
-        
     }
 
     private void Update()
@@ -37,11 +41,12 @@ public class PauseMenu : MonoBehaviour
                 case (GameState.settings):
                     CloseSettings();
                     break;
+                default:
+                    break;
             }
         }
     }
-
-
+    
     public void Resume()
     {
         // désactiver menu pause
@@ -50,7 +55,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         // changer le statut du jeu
         currentState = GameState.playing;
-
+        
         /* Réactiver les mouvements du joueur */
     }
     public void Pause()
@@ -61,8 +66,10 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0;
         // changer le statut du jeu
         currentState = GameState.paused;
-
+        
+        primaryPauseButton.Select();
         /* Désactiver les mouvements du joueur */
+        
     }
     
     public void LoadMainMenu()
@@ -76,11 +83,13 @@ public class PauseMenu : MonoBehaviour
     {
         currentState = GameState.settings;
         settingMenu.SetActive(true);
+        primarySettingButton.Select();
     }
 
     public void CloseSettings()
     {
         currentState = GameState.paused;
         settingMenu.SetActive(false);
+        settingButton.Select();
     }
 }

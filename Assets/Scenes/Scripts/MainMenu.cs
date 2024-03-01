@@ -1,16 +1,24 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private string target;
     [SerializeField] private bool isSettingsOpen;
     [SerializeField] private GameObject settingMenu;
+    [SerializeField] private Button primaryMenuButton; 
+    [SerializeField] private Button SettingButton;
+    [SerializeField] private TMP_Dropdown primarySettingButton;
+    private MenuInput _mInput;
 
     private void Start()
     {
         settingMenu.SetActive(false);
         isSettingsOpen = false;
+        _mInput = new MenuInput();
+        _mInput.Enable();
     }
 
     private void Update()
@@ -30,12 +38,14 @@ public class MainMenu : MonoBehaviour
     {
         settingMenu.SetActive(true);
         isSettingsOpen = true;
+        SettingButton.Select();
     }
     
     public void CloseSettings()
     {
         settingMenu.SetActive(false);
         isSettingsOpen = false;
+        primaryMenuButton.Select();
     }
     public void QuitGame()
     {
