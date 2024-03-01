@@ -3167,10 +3167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38170661ecbe7ad43958abc1fc755817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: MapChoice
+  target: Card_Test_Scene
   isSettingsOpen: 0
   settingMenu: {fileID: 993926911}
   primaryMenuButton: {fileID: 1880958302}
+  SettingButton: {fileID: 947982748}
   primarySettingButton: {fileID: 1977710346}
 --- !u!4 &1706924525
 Transform:

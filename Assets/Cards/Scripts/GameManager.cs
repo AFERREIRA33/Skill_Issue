@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if (numCard == 11)
         {
-            SceneManager.LoadScene("Test_Game_Part_Draw_Card");
+            SceneManager.LoadScene("MapChoice");
         }
     }
 

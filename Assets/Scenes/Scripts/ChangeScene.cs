@@ -7,9 +7,9 @@ public class ChangeScene : MonoBehaviour
     [SerializeField] private string menu;
     [SerializeField] private string game;
     
-    public void LoadGame(int level)
+    public void LoadGame(string level)
     {
-        SceneManager.LoadScene(game);
+        SceneManager.LoadScene(level);
     }
     
     public void LoadMenu()
