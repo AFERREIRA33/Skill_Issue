@@ -28,18 +28,19 @@ public class SettingMenu : MonoBehaviour
         {
             string option = _resolutions[index].width + "x" + _resolutions[index].height;
             optionsDropdowns.Add(option);
-
+            
+            
             if (_resolutions[index].width == Screen.width && _resolutions[index].height == Screen.height)
             {
                 bestResolutionIndex = index;
             }
         }
-
         resolutionDropdown.AddOptions(optionsDropdowns);
-        resolutionDropdown.value = bestResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        SetMyResolution(bestResolutionIndex);
     }
 
+        
+    
     public void SetFullScreen(bool isFullScreen)
     {
         Screen.fullScreen = isFullScreen;
@@ -50,7 +51,7 @@ public class SettingMenu : MonoBehaviour
         _audio.SetFloat("volume", value);
     }
 
-    public void SetResolution(int resolutionIndex)
+    public void SetMyResolution(int resolutionIndex)
     {
         Resolution resolution = _resolutions[resolutionIndex];
         

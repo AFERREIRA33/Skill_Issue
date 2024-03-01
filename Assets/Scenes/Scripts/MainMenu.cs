@@ -15,8 +15,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        settingMenu.SetActive(false);
-        isSettingsOpen = false;
+        settingMenu.SetActive(true);
+        isSettingsOpen = true;
         _mInput = new MenuInput();
         _mInput.Enable();
     }
